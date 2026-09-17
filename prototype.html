@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="cute">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChronosAI — Multi-Agent Reset Pulse & Financial Watcher</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* ============================================================
+       THEME SYSTEM: TOKENS & VISUAL UNIVERSES
+       ============================================================ */
+
+    /* 1. KAWAII DREAM (FEMININE PASTEL CUTE AESTHETIC - DEFAULT) */
+    html[data-theme="cute"] {
+      --bg-base: #fff5f7;
+      --bg-pattern: radial-gradient(#fecdd3 1.5px, transparent 1.5px);
+      --bg-card: #ffffff;
+      --border-card: #fbcfe8;
+      --border-width: 2px;
+      --text-main: #831843;       /* Deep Berry Plum - Super High Contrast */
+      --text-muted: #be185d;      /* Rose Medium */
+      --accent-primary: #f43f5e;  /* Strawberry Rose */
+      --accent-secondary: #a855f7;/* Lavender Lilac */
+      --accent-pill: #ffe4e6;     /* Pastel Pink Pill */
+      --accent-pill-text: #9f1239;
+      --font-family: 'Plus Jakarta Sans', 'Quicksand', sans-serif;
+      --radius-box: 24px;
+      --shadow-soft: 0 16px 36px -10px rgba(244, 63, 94, 0.15), 0 0 0 1px rgba(251, 207, 232, 0.6);
+      --badge-radius: 9999px;
+      --button-hover-transform: scale(1.05) rotate(-1deg);
+      --button-active-transform: scale(0.95) rotate(1deg);
+    }
+
+    /* 2. CYBER-VIRUS MATRIX (HACKER EXTREME) */
+    html[data-theme="hacker"] {
+      --bg-base: #000000;
+      --bg-pattern: none;
+      --bg-card: rgba(4, 18, 7, 0.94);
+      --border-card: #00ff41;
+      --border-width: 1.5px;
+      --text-main: #00ff41;       /* Radioactive Phosphor Green */
+      --text-muted: #008f11;      /* Dark Green Terminal */
+      --accent-primary: #00ff41;
+      --accent-secondary: #00f0ff;/* Glitch Cyan */
+      --accent-pill: rgba(0, 255, 65, 0.15);
+      --accent-pill-text: #00ff41;
+      --font-family: 'Fira Code', monospace;
+      --radius-box: 2px;
+      --shadow-soft: 0 0 25px rgba(0, 255, 65, 0.35), inset 0 0 12px rgba(0, 255, 65, 0.08);
+      --badge-radius: 2px;
+      --button-hover-transform: translateY(-2px);
+      --button-active-transform: translateY(1px);
+    }
+
+    /* 3. OBSIDIAN PRO HIGH-TECH (FLAGSHIP DARK) */
+    html[data-theme="obsidian"] {
+      --bg-base: #09090b;
+      --bg-pattern: radial-gradient(#27272a 1px, transparent 1px);
+      --bg-card: rgba(24, 24, 28, 0.85);
+      --border-card: rgba(255, 255, 255, 0.1);
+      --border-width: 1px;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent-primary: #10b981;  /* Emerald Neon */
+      --accent-secondary: #6366f1;/* Indigo Glow */
+      --accent-pill: rgba(16, 185, 129, 0.15);
+      --accent-pill-text: #34d399;
+      --font-family: 'Inter', sans-serif;
+      --radius-box: 16px;
+      --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      --badge-radius: 10px;
+      --button-hover-transform: translateY(-2px);
+      --button-active-transform: scale(0.98);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      background-image: var(--bg-pattern);
+      background-size: 24px 24px;
+      color: var(--text-main);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* MATRIX RAIN BACKGROUND CANVAS */
+    #matrix-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0; pointer-events: none; display: none; opacity: 0.75;
+    }
+    html[data-theme="hacker"] #matrix-canvas { display: block; }
+
+    /* THEME CARDS */
+    .theme-card {
+      background-color: var(--bg-card);
+      border: var(--border-width) solid var(--border-card);
+      border-radius: var(--radius-box);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(16px);
+      position: relative;
+      z-index: 10;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+
+    .squishy-btn {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+      border-radius: var(--badge-radius);
+    }
+    .squishy-btn:hover { transform: var(--button-hover-transform); }
+    .squishy-btn:active { transform: var(--button-active-transform); }
+
+    /* BORDER BEAM EFFECT */
+    .border-beam-box {
+      position: relative; overflow: hidden; border-radius: var(--radius-box);
+    }
+    .border-beam-box::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: conic-gradient(transparent, var(--accent-primary), transparent 30%);
+      animation: rotateBeam 4s linear infinite; z-index: 1; opacity: 0.5;
+    }
+    .border-beam-content {
+      position: relative; z-index: 2; background: var(--bg-card);
+      border-radius: calc(var(--radius-box) - var(--border-width));
+    }
+    @keyframes rotateBeam { 100% { transform: rotate(1turn); } }
+
+    .pill-badge {
+      background-color: var(--accent-pill);
+      color: var(--accent-pill-text);
+      border-radius: var(--badge-radius);
+      border: 1px solid var(--border-card);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="p-3 md:p-6 pb-28">
+
+  <!-- BACKGROUND MATRIX CANVAS -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- MAIN CONTAINER -->
+  <div class="max-w-6xl mx-auto relative z-10 space-y-6">
+    
+    <!-- TOP HEADER WITH NOTIFICATION CENTER BELL -->
+    <header class="theme-card p-4 md:p-5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div id="header-mascot" class="w-12 h-12 rounded-2xl flex items-center justify-center border-2 border-pink-300 bg-pink-100 shadow-md transition-all">
+          <span class="text-2xl" id="mascot-emoji">🌸</span>
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-black tracking-tight flex items-center gap-2">
+            ChronosAI <span class="text-xs px-2.5 py-0.5 pill-badge" id="version-tag">✨ Kawaii v1.4</span>
+          </h1>
+          <p class="text-xs font-semibold opacity-85">
+            🎀 Pemantau Kuota AI & Tagihan Langganan
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT CONTROLS: LAPTOP NOTIFICATION BELL + THEME SELECTOR -->
+      <div class="flex items-center gap-3">
+        
+        <!-- IN-APP NOTIFICATION BELL (LAPTOP NOTIFICATION CENTER) -->
+        <div class="relative">
+          <button onclick="toggleNotificationPanel()" class="squishy-btn relative p-2.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 hover:bg-black/10 flex items-center justify-center text-current" title="Pusat Notifikasi Laptop">
+            <i data-lucide="bell" class="w-5 h-5"></i>
+            <span id="unread-badge" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center shadow-md animate-pulse">2</span>
+          </button>
+
+          <!-- NOTIFICATION CENTER DROPDOWN PANEL -->
+          <div id="notification-panel" class="theme-card absolute right-0 mt-3 w-80 sm:w-96 p-4 shadow-2xl space-y-3 hidden z-50">
+            <div class="flex items-center justify-between border-b border-current/10 pb-2.5">
+              <div class="flex items-center gap-2">
+                <i data-lucide="bell-ring" class="w-4 h-4 text-rose-500"></i>
+                <h4 class="font-black text-xs">Pusat Notifikasi Laptop</h4>
+              </div>
+              <button onclick="markAllAsRead()" class="text-[11px] font-bold text-rose-500 hover:underline">
+                Tandai Semua Dibaca
+              </button>
+            </div>
+
+            <!-- FILTER BUTTONS -->
+            <div class="flex items-center gap-2 text-[11px] font-bold">
+              <button onclick="filterNotifs('all')" id="filter-all" class="px-2.5 py-1 rounded-lg bg-rose-500 text-white">Semua</button>
+              <button onclick="filterNotifs('unread')" id="filter-unread" class="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 opacity-70">Belum Dibaca (<span id="unread-text-count">2</span>)</button>
+            </div>
+
+            <!-- NOTIFICATIONS LIST -->
+            <div class="space-y-2.5 max-h-72 overflow-y-auto pr-1" id="notifications-list">
+              <!-- Item 1: H-7 Alert -->
+              <div class="notif-item p-3 rounded-xl bg-black/5 dark:bg-black/40 border border-amber-300 space-y-1 relative" data-read="false" id="notif-1">
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-rose-500 unread-dot"></span>
+                    <span class="font-extrabold text-xs text-amber-600">⚠️ Peringatan H-7 Habis</span>
+                  </div>
+                  <span class="text-[10px] opacity-60">10 mnt lalu</span>
+                </div>
+                <p class="text-xs font-semibold">Masa trial Antigravity Enterprise berakhir dalam 7 hari (Mulai bayar di Bulan ke-5).</p>
+                <div class="flex justify-end pt-1">
+                  <button onclick="toggleNotifRead('notif-1')" class="text-[10px] font-bold text-rose-500 underline">Tandai Sudah Dibaca</button>
+                </div>
+              </div>
+
+              <!-- Item 2: Reset Quota Alert -->
+              <div class="notif-item p-3 rounded-xl bg-black/5 dark:bg-black/40 border border-current/10 space-y-1 relative" data-read="false" id="notif-2">
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-rose-500 unread-dot"></span>
+                    <span class="font-extrabold text-xs text-blue-500">⚡ Reset Kuota Agent</span>
+                  </div>
+                  <span class="text-[10px] opacity-60">1 jam lalu</span>
+                </div>
+                <p class="text-xs font-semibold">Claude Code (Work Mac) kuota akan pulih dalam 2 jam 18 menit.</p>
+                <div class="flex justify-end pt-1">
+                  <button onclick="toggleNotifRead('notif-2')" class="text-[10px] font-bold text-rose-500 underline">Tandai Sudah Dibaca</button>
+                </div>
+              </div>
+
+              <!-- Item 3: Sudah Dibaca -->
+              <div class="notif-item p-3 rounded-xl bg-black/5 dark:bg-black/40 border border-current/5 space-y-1 opacity-60" data-read="true" id="notif-3">
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-extrabold text-xs">✅ Akun Berhasil Ditautkan</span>
+                  </div>
+                  <span class="text-[10px] opacity-60">Kemarin</span>
+                </div>
+                <p class="text-xs">Cursor Pro berhasil dihubungkan ke dasbor ChronosAI.</p>
+                <div class="flex justify-end pt-1">
+                  <button onclick="toggleNotifRead('notif-3')" class="text-[10px] font-bold text-rose-500 underline">Tandai Belum Dibaca</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THEME SELECTOR PILLS -->
+        <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/10">
+          <button onclick="switchTheme('cute')" id="btn-theme-cute" class="squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 bg-rose-500 text-white shadow-md">
+            <span>🌸</span> Kawaii Pastel
+          </button>
+          <button onclick="switchTheme('hacker')" id="btn-theme-hacker" class="squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 text-stone-500 hover:text-black">
+            <span>💀</span> Cyber-Virus
+          </button>
+          <button onclick="switchTheme('obsidian')" id="btn-theme-obsidian" class="squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 text-stone-500 hover:text-black">
+            <span>💎</span> Obsidian Pro
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="flex items-center gap-2.5 overflow-x-auto pb-1">
+      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="squishy-btn px-5 py-2.5 text-xs font-extrabold flex items-center gap-2 bg-rose-500 text-white shadow-lg shadow-rose-500/25">
+        <i data-lucide="sparkles" class="w-4 h-4"></i> Dashboard Radar
+      </button>
+      <button onclick="switchTab('accounts')" id="nav-accounts" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
+        <i data-lucide="bot" class="w-4 h-4"></i> Armada Akun (<span id="fleet-count">3</span>)
+      </button>
+      <button onclick="switchTab('subscriptions')" id="nav-subscriptions" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
+        <i data-lucide="credit-card" class="w-4 h-4"></i> Langganan & Biaya (<span class="text-rose-500 font-extrabold">H-7 Aktif</span>)
+      </button>
+      <button onclick="switchTab('settings')" id="nav-settings" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
+        <i data-lucide="smartphone" class="w-4 h-4"></i> Push HP & Cadangan
+      </button>
+    </nav>
+
+    <!-- ============================================================
+         TAB 1: DASHBOARD
+         ============================================================ -->
+    <main id="tab-dashboard" class="space-y-6">
+      
+      <!-- HACKER SPECIAL: VIRUS ALERT BANNER -->
+      <div id="hacker-virus-banner" class="theme-card p-3 border-2 border-red-500 bg-red-950/40 text-red-400 text-xs font-mono flex items-center justify-between hidden">
+        <div class="flex items-center gap-3">
+          <span class="animate-ping w-2.5 h-2.5 rounded-full bg-red-500"></span>
+          <span class="font-bold tracking-wider">[SYSTEM_OVERRIDE]: ROGUE AI VIRUS ENGAGED (0xDEADBEEF)</span>
+        </div>
+        <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-300 font-bold">ROOT ACTIVE</span>
+      </div>
+
+      <!-- SMART FLEET RECOMMENDER BANNER -->
+      <div class="border-beam-box">
+        <div class="border-beam-content p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border-2 border-rose-300 flex items-center justify-center text-rose-500 text-2xl font-bold">
+              <span>⭐</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="pill-badge px-2.5 py-0.5 text-[10px] uppercase tracking-wider">✨ Rekomendasi Pintar</span>
+                <span class="text-xs opacity-75 font-semibold">Armada Siap Pakai</span>
+              </div>
+              <h3 class="text-lg font-black mt-1">
+                Gunakan: <span class="underline decoration-wavy decoration-rose-400">Antigravity (DeepMind Fleet #1)</span>
+              </h3>
+              <p class="text-xs opacity-80">Kuota 100% segar baru saja reset. Produktivitas coding tanpa hambatan!</p>
+            </div>
+          </div>
+          <button onclick="switchTab('accounts')" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md">
+            <span>Pilih Akun Ini</span> <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- BENTO GRID -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- CARD 1: 3D MASCOT CANVAS -->
+        <div class="theme-card p-5 md:col-span-1 flex flex-col items-center justify-between min-h-[320px]">
+          <div class="w-full flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider flex items-center gap-1.5" id="mascot-box-title">
+              <i data-lucide="heart" class="w-4 h-4 text-rose-500"></i> 3D Kawaii Mascot
+            </span>
+            <span class="pill-badge px-2 py-0.5 text-[10px]">Happy Pulse</span>
+          </div>
+
+          <div id="three-container" class="w-full h-52 flex items-center justify-center cursor-grab active:cursor-grabbing"></div>
+
+          <div class="text-center w-full">
+            <p class="text-[11px] opacity-75 font-medium">Putar maskot lucu dengan kursor / jari Anda!</p>
+          </div>
+        </div>
+
+        <!-- CARD 2: RADAR COUNTDOWN TERDEKAT -->
+        <div class="theme-card p-6 md:col-span-2 flex flex-col justify-between space-y-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></span>
+              <span class="text-xs font-black uppercase tracking-wider text-amber-500">⏳ Reset Paling Kritis</span>
+            </div>
+            <span class="pill-badge px-2.5 py-0.5 text-[11px]">Rolling 5 Jam</span>
+          </div>
+
+          <div>
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border-2 border-amber-300 flex items-center justify-center font-black text-amber-600 text-lg">
+                CC
+              </div>
+              <div>
+                <h4 class="text-xl font-black" id="target-account-name">Claude Code (Work Terminal)</h4>
+                <p class="text-xs opacity-75">Limit rate tercapai pada sesi coding siang ini</p>
+              </div>
+            </div>
+
+            <!-- LIVE TIMER TICKER -->
+            <div class="mt-6 flex items-center gap-3">
+              <div class="px-5 py-3.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 text-center min-w-[80px]">
+                <span class="text-4xl font-black text-amber-500" id="timer-hours">02</span>
+                <p class="text-[10px] font-bold uppercase opacity-70">Jam</p>
+              </div>
+              <span class="text-2xl font-black opacity-40">:</span>
+              <div class="px-5 py-3.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 text-center min-w-[80px]">
+                <span class="text-4xl font-black text-amber-500" id="timer-minutes">18</span>
+                <p class="text-[10px] font-bold uppercase opacity-70">Menit</p>
+              </div>
+              <span class="text-2xl font-black opacity-40">:</span>
+              <div class="px-5 py-3.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 text-center min-w-[80px]">
+                <span class="text-4xl font-black text-amber-500" id="timer-seconds">45</span>
+                <p class="text-[10px] font-bold uppercase opacity-70">Detik</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK ACTION BUTTON -->
+          <div class="pt-4 border-t border-current/10 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2 text-xs font-semibold opacity-80">
+              <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i>
+              <span>Baru saja terkena limit token lagi?</span>
+            </div>
+            <button onclick="triggerQuickDepletion()" class="squishy-btn px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center gap-2 shadow-lg shadow-rose-500/30">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              <span>Limit Kena Sekarang! (Mulai 5 Jam)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- METRICS OVERVIEW -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="theme-card p-5 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold opacity-75">Armada Akun Aktif</p>
+            <h4 class="text-2xl font-black mt-1">3 Akun</h4>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border-2 border-rose-300 flex items-center justify-center text-rose-500 font-bold text-xl">
+            🤖
+          </div>
+        </div>
+
+        <div class="theme-card p-5 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold opacity-75">Monthly Burn Rate</p>
+            <h4 class="text-2xl font-black mt-1">$40.00 <span class="text-xs font-normal opacity-75">(Antigravity $0 Trial)</span></h4>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border-2 border-purple-300 flex items-center justify-center text-purple-500 font-bold text-xl">
+            💰
+          </div>
+        </div>
+
+        <div class="theme-card p-5 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold opacity-75">Peringatan Langganan</p>
+            <h4 class="text-2xl font-black mt-1 text-amber-500">H-7 (Antigravity)</h4>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border-2 border-amber-300 flex items-center justify-center text-amber-500 font-bold text-xl">
+            ⚠️
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ============================================================
+         TAB 2: FLEET ACCOUNTS
+         ============================================================ -->
+    <section id="tab-accounts" class="space-y-6 hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl md:text-2xl font-black">Armada Akun AI Agent</h2>
+          <p class="text-xs font-semibold opacity-75">Tautkan dan pantau kuota reset dari seluruh provider tanpa batas</p>
+        </div>
+        <button onclick="openModalAccount()" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i> + Tautkan Akun Baru
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- CARD 1: ANTIGRAVITY -->
+        <div class="theme-card p-6 flex flex-col justify-between space-y-5">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="pill-badge px-3 py-1 text-xs">🟢 READY NOW (100%)</span>
+              <span class="text-xs font-semibold opacity-75">Weekly Pool</span>
+            </div>
+            <div class="flex items-center gap-3.5 mt-4">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/15 border-2 border-indigo-300 flex items-center justify-center font-black text-indigo-500 text-base">
+                AG
+              </div>
+              <div>
+                <h4 class="font-black text-base">Antigravity (DeepMind #1)</h4>
+                <p class="text-xs opacity-70">dev***@company.ai</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-black/5 dark:bg-black/30 border border-current/10 space-y-1.5 text-xs">
+            <div class="flex justify-between">
+              <span class="opacity-75">Jadwal Reset:</span>
+              <span class="font-bold">Senin 07:00 UTC</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="opacity-75">Status Trial:</span>
+              <span class="font-extrabold text-emerald-500">Bulan ke-4 (Gratis $0)</span>
+            </div>
+          </div>
+          <button class="squishy-btn w-full py-2.5 bg-black/5 dark:bg-white/5 hover:bg-black/10 text-xs font-bold border border-current/15 flex items-center justify-center gap-2">
+            <i data-lucide="sliders" class="w-3.5 h-3.5"></i> Edit Konfigurasi
+          </button>
+        </div>
+
+        <!-- CARD 2: CLAUDE CODE -->
+        <div class="theme-card p-6 flex flex-col justify-between space-y-5">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="pill-badge px-3 py-1 text-xs bg-amber-500/20 text-amber-600 border-amber-300">🟡 RECHARGING</span>
+              <span class="text-xs font-semibold opacity-75">Rolling 5 Jam</span>
+            </div>
+            <div class="flex items-center gap-3.5 mt-4">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border-2 border-amber-300 flex items-center justify-center font-black text-amber-600 text-base">
+                CC
+              </div>
+              <div>
+                <h4 class="font-black text-base">Claude Code (Work Mac)</h4>
+                <p class="text-xs opacity-70">alex***@work.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-black/5 dark:bg-black/30 border border-current/10 space-y-1.5 text-xs">
+            <div class="flex justify-between">
+              <span class="opacity-75">Sisa Hitungan:</span>
+              <span class="font-black text-amber-500" id="card-cc-timer">02:18:45</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="opacity-75">Biaya Paket:</span>
+              <span class="font-bold">$20.00 / bulan</span>
+            </div>
+          </div>
+          <button onclick="triggerQuickDepletion()" class="squishy-btn w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center justify-center gap-2 shadow-md">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Limit Kena Sekarang!
+          </button>
+        </div>
+
+        <!-- CARD 3: CURSOR PRO -->
+        <div class="theme-card p-6 flex flex-col justify-between space-y-5">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="pill-badge px-3 py-1 text-xs bg-blue-500/20 text-blue-600 border-blue-300">🟢 READY (500 Fast)</span>
+              <span class="text-xs font-semibold opacity-75">Bulanan</span>
+            </div>
+            <div class="flex items-center gap-3.5 mt-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/15 border-2 border-blue-300 flex items-center justify-center font-black text-blue-500 text-base">
+                CR
+              </div>
+              <div>
+                <h4 class="font-black text-base">Cursor Pro (MacBook M3)</h4>
+                <p class="text-xs opacity-70">alex***@icloud.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-black/5 dark:bg-black/30 border border-current/10 space-y-1.5 text-xs">
+            <div class="flex justify-between">
+              <span class="opacity-75">Reset Bulanan:</span>
+              <span class="font-bold">Tgl 1 Tiap Bulan</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="opacity-75">Harga Diskon:</span>
+              <span class="font-black text-blue-500">$20.00 (Promo)</span>
+            </div>
+          </div>
+          <button class="squishy-btn w-full py-2.5 bg-black/5 dark:bg-white/5 hover:bg-black/10 text-xs font-bold border border-current/15 flex items-center justify-center gap-2">
+            <i data-lucide="sliders" class="w-3.5 h-3.5"></i> Edit Konfigurasi
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TAB 3: SUBSCRIPTIONS (TRIAL, DURASI & PERINGATAN H-7)
+         ============================================================ -->
+    <section id="tab-subscriptions" class="space-y-6 hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl md:text-2xl font-black">Manajemen Langganan & Masa Trial</h2>
+          <p class="text-xs font-semibold opacity-75">Pantau tanggal awal, durasi, skema trial 4 bulan, dan peringatan H-7</p>
+        </div>
+        <button onclick="openModalSubscription()" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md">
+          <i data-lucide="plus" class="w-4 h-4"></i> + Tambah Langganan Baru
+        </button>
+      </div>
+
+      <div class="theme-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-black/5 dark:bg-black/40 text-current/70 font-extrabold uppercase border-b border-current/10">
+              <tr>
+                <th class="p-4">Provider / Paket</th>
+                <th class="p-4">Awal Mulai</th>
+                <th class="p-4">Durasi</th>
+                <th class="p-4">Skema Biaya</th>
+                <th class="p-4">Tanggal Habis / Tagihan</th>
+                <th class="p-4">Peringatan</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-current/10 font-medium">
+              <!-- Row 1: Antigravity 4 Bulan Trial -->
+              <tr class="hover:bg-black/5 bg-amber-500/5">
+                <td class="p-4 font-black flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Antigravity Enterprise
+                </td>
+                <td class="p-4">17 Mei 2026</td>
+                <td class="p-4 font-bold">4 Bulan (Trial)</td>
+                <td class="p-4">
+                  <span class="text-emerald-500 font-extrabold">$0.00 (Masa Trial)</span>
+                  <span class="block text-[10px] opacity-70">Bulan ke-5: $30.00/bln</span>
+                </td>
+                <td class="p-4 text-amber-600 font-black">
+                  24 Sept 2026 (7 Hari Lagi!)
+                </td>
+                <td class="p-4">
+                  <span class="pill-badge px-2.5 py-1 text-[10px] bg-amber-500/20 text-amber-700 border-amber-300 font-black animate-pulse">
+                    ⚠️ H-7 ALERT AKTIF
+                  </span>
+                </td>
+              </tr>
+
+              <!-- Row 2: Claude Pro -->
+              <tr class="hover:bg-black/5">
+                <td class="p-4 font-black flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Claude Pro Tier
+                </td>
+                <td class="p-4">01 Jan 2026</td>
+                <td class="p-4 font-bold">12 Bulan (1 Thn)</td>
+                <td class="p-4 font-black text-sm">$20.00 / bln</td>
+                <td class="p-4 font-bold">01 Okt 2026</td>
+                <td class="p-4">
+                  <span class="pill-badge px-2.5 py-0.5 text-[10px]">Normal (H-14)</span>
+                </td>
+              </tr>
+
+              <!-- Row 3: Cursor Pro Diskon Promo -->
+              <tr class="hover:bg-black/5">
+                <td class="p-4 font-black flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Cursor Pro Individual
+                </td>
+                <td class="p-4">15 Juli 2026</td>
+                <td class="p-4 font-bold">3 Bulan (Promo)</td>
+                <td class="p-4">
+                  <span class="font-black text-sm text-rose-500">$15.00</span>
+                  <span class="line-through text-[10px] opacity-60 ml-1">$20.00</span>
+                </td>
+                <td class="p-4 font-bold">15 Okt 2026</td>
+                <td class="p-4">
+                  <span class="pill-badge px-2.5 py-0.5 text-[10px]">Normal (H-28)</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TAB 4: PWA PUSH HP & CADANGAN DATA
+         ============================================================ -->
+    <section id="tab-settings" class="space-y-6 hidden">
+      <div>
+        <h2 class="text-xl md:text-2xl font-black">Notifikasi HP & Cadangan Data</h2>
+        <p class="text-xs font-semibold opacity-75">Konfigurasi Web Push PWA untuk Smartphone dan portabilitas data JSON</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- MOBILE PWA PUSH -->
+        <div class="theme-card p-6 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-rose-500/10 border border-rose-300 flex items-center justify-center text-rose-500">
+              <i data-lucide="smartphone" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-sm">Notifikasi Push HP (Mobile PWA)</h3>
+              <p class="text-xs opacity-75">Berdering di smartphone saat H-2 jam reset & H-7 tagihan</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/10 space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-bold">Izin Notifikasi HP:</span>
+              <span class="pill-badge px-2.5 py-0.5 text-[10px]" id="push-status-badge">🟢 Siap Diaktifkan</span>
+            </div>
+            <p class="text-[11px] opacity-75">Aplikasi akan meminta izin sistem operasi untuk mengirimkan push banner saat HP terkunci.</p>
+          </div>
+
+          <button onclick="requestMobilePushPermission()" class="squishy-btn w-full py-3 bg-rose-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md">
+            <i data-lucide="bell-ring" class="w-4 h-4"></i> Uji Coba Web Push ke HP
+          </button>
+        </div>
+
+        <!-- EXPORT / IMPORT -->
+        <div class="theme-card p-6 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-300 flex items-center justify-center text-purple-500">
+              <i data-lucide="database" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-sm">Cadangan & Pemulihan Data</h3>
+              <p class="text-xs opacity-75">Ekspor seluruh riwayat akun dan durasi langganan</p>
+            </div>
+          </div>
+
+          <p class="text-xs opacity-80">Simpan berkas konfigurasi offline secara lokal di komputer Anda untuk dicadangkan kapan saja.</p>
+
+          <div class="flex items-center gap-3 pt-2">
+            <button onclick="exportDataJSON()" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md">
+              <i data-lucide="download" class="w-4 h-4"></i> Export (.json)
+            </button>
+            <button onclick="triggerToast('✨ File cadangan JSON tervalidasi Zod siap dipulihkan!', 'cute')" class="squishy-btn px-5 py-2.5 bg-black/5 dark:bg-white/5 hover:bg-black/10 text-xs font-extrabold border border-current/15 flex items-center gap-2">
+              <i data-lucide="upload" class="w-4 h-4"></i> Impor Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============================================================
+       MODAL: FORM TAMBAH LANGGANAN (DURASI, TRIAL 4 BULAN, DISKON)
+       ============================================================ -->
+  <div id="modal-subscription" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="theme-card max-w-lg w-full p-6 space-y-5">
+      <div class="flex items-center justify-between border-b border-current/10 pb-3">
+        <h3 class="font-black text-base flex items-center gap-2">
+          <i data-lucide="calendar" class="w-5 h-5 text-rose-500"></i> Atur Periode Langganan & Promo
+        </h3>
+        <button onclick="closeModalSubscription()" class="opacity-70 hover:opacity-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-sub" onsubmit="handleSubSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="font-bold block mb-1">Provider AI</label>
+          <select id="sub-provider" onchange="onSubProviderChange(this.value)" class="w-full px-4 py-2.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/20 font-semibold focus:outline-none focus:border-rose-500">
+            <option value="antigravity">Antigravity (Google DeepMind)</option>
+            <option value="claude">Claude Code (Anthropic)</option>
+            <option value="cursor">Cursor Pro</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold block mb-1">Tanggal Mulai Berlangganan</label>
+            <input type="date" id="sub-start-date" value="2026-09-17" onchange="recalculateEndDate()" class="w-full px-4 py-2 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/20 font-medium">
+          </div>
+          <div>
+            <label class="font-bold block mb-1">Berapa Lama Durasi Langganan?</label>
+            <select id="sub-duration" onchange="recalculateEndDate()" class="w-full px-4 py-2.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/20 font-semibold">
+              <option value="1">1 Bulan</option>
+              <option value="3">3 Bulan</option>
+              <option value="4" selected>4 Bulan (Trial Antigravity)</option>
+              <option value="6">6 Bulan</option>
+              <option value="12">12 Bulan (1 Tahun)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SKEMA BIAYA (REGULER, DISKON, ATAU TRIAL) -->
+        <div class="p-4 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 space-y-3">
+          <label class="font-extrabold block text-rose-500">Skema Biaya & Promo Khusus</label>
+          
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="pricing-scheme" value="trial" checked onchange="togglePricingInputs('trial')" class="accent-rose-500">
+              <span class="font-bold">Masa Trial Gratis (Misal 4 Bulan Gratis, Bulan ke-5 Bayar)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="pricing-scheme" value="discount" onchange="togglePricingInputs('discount')" class="accent-rose-500">
+              <span class="font-bold">Harga Diskon Promo Khusus</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="pricing-scheme" value="regular" onchange="togglePricingInputs('regular')" class="accent-rose-500">
+              <span class="font-bold">Harga Reguler Standar</span>
+            </label>
+          </div>
+
+          <div id="trial-inputs" class="grid grid-cols-2 gap-3 pt-2">
+            <div>
+              <span class="opacity-70 text-[10px] block">Durasi Free Trial</span>
+              <input type="number" id="trial-months" value="4" class="w-full px-3 py-1.5 rounded-xl bg-white dark:bg-black/40 border border-current/20 font-bold" readonly>
+            </div>
+            <div>
+              <span class="opacity-70 text-[10px] block">Bayar Mulai Bulan Ke-</span>
+              <input type="number" id="paid-month" value="5" class="w-full px-3 py-1.5 rounded-xl bg-white dark:bg-black/40 border border-current/20 font-bold">
+            </div>
+          </div>
+        </div>
+
+        <!-- KALKULASI OTOMATIS & PERINGATAN H-7 -->
+        <div class="p-4 rounded-2xl bg-rose-500/10 border-2 border-rose-300 text-rose-800 dark:text-rose-200 space-y-1">
+          <span class="font-black block text-rose-600 dark:text-rose-400">✨ Rangkuman Jadwal Otomatis:</span>
+          <div class="flex justify-between text-[11px] font-bold">
+            <span>Tanggal Berakhir / Tagihan:</span>
+            <span id="calc-end-date" class="font-black underline">17 Januari 2027</span>
+          </div>
+          <div class="flex justify-between text-[11px] font-bold">
+            <span>Peringatan Dini (H-7):</span>
+            <span id="calc-h7-date" class="text-amber-600 dark:text-amber-400">10 Januari 2027 (Aktif)</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2.5 pt-2">
+          <button type="button" onclick="closeModalSubscription()" class="squishy-btn px-5 py-2.5 bg-black/5 dark:bg-white/5 font-bold">Batal</button>
+          <button type="submit" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-black shadow-md">Simpan Konfigurasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION DOCK -->
+  <div id="toast-dock" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ============================================================
+       SCRIPT ENGINE: THREE.JS, NOTIFICATIONS, MODALS & CALCULATOR
+       ============================================================ -->
+  <script>
+    let currentTheme = 'cute';
+    let remainingSeconds = 8325;
+    let matrixInterval = null, matrixCanvas, matrixCtx, matrixDrops;
+
+    lucide.createIcons();
+
+    // 1. IN-APP NOTIFICATION CENTER (LAPTOP)
+    function toggleNotificationPanel() {
+      const panel = document.getElementById('notification-panel');
+      panel.classList.toggle('hidden');
+    }
+
+    function updateUnreadCount() {
+      const unreadItems = document.querySelectorAll('.notif-item[data-read="false"]');
+      const count = unreadItems.length;
+      const badge = document.getElementById('unread-badge');
+      const textCount = document.getElementById('unread-text-count');
+
+      badge.innerText = count;
+      textCount.innerText = count;
+
+      if (count === 0) {
+        badge.classList.add('hidden');
+      } else {
+        badge.classList.remove('hidden');
+      }
+    }
+
+    function toggleNotifRead(id) {
+      const item = document.getElementById(id);
+      const isRead = item.getAttribute('data-read') === 'true';
+      const btn = item.querySelector('button');
+      const dot = item.querySelector('.unread-dot');
+
+      if (isRead) {
+        item.setAttribute('data-read', 'false');
+        item.classList.remove('opacity-60');
+        if (dot) dot.classList.remove('hidden');
+        btn.innerText = "Tandai Sudah Dibaca";
+        triggerToast("Notifikasi ditandai BELUM dibaca", "info");
+      } else {
+        item.setAttribute('data-read', 'true');
+        item.classList.add('opacity-60');
+        if (dot) dot.classList.add('hidden');
+        btn.innerText = "Tandai Belum Dibaca";
+        triggerToast("Notifikasi ditandai SUDAH dibaca", "info");
+      }
+      updateUnreadCount();
+    }
+
+    function markAllAsRead() {
+      document.querySelectorAll('.notif-item').forEach(item => {
+        item.setAttribute('data-read', 'true');
+        item.classList.add('opacity-60');
+        const dot = item.querySelector('.unread-dot');
+        if (dot) dot.classList.add('hidden');
+        const btn = item.querySelector('button');
+        if (btn) btn.innerText = "Tandai Belum Dibaca";
+      });
+      updateUnreadCount();
+      triggerToast("Semua notifikasi ditandai sudah dibaca!", "info");
+    }
+
+    function filterNotifs(type) {
+      const allBtn = document.getElementById('filter-all');
+      const unreadBtn = document.getElementById('filter-unread');
+      const items = document.querySelectorAll('.notif-item');
+
+      if (type === 'unread') {
+        unreadBtn.className = "px-2.5 py-1 rounded-lg bg-rose-500 text-white font-bold";
+        allBtn.className = "px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 opacity-70 font-bold";
+        items.forEach(i => {
+          if (i.getAttribute('data-read') === 'false') i.classList.remove('hidden');
+          else i.classList.add('hidden');
+        });
+      } else {
+        allBtn.className = "px-2.5 py-1 rounded-lg bg-rose-500 text-white font-bold";
+        unreadBtn.className = "px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 opacity-70 font-bold";
+        items.forEach(i => i.classList.remove('hidden'));
+      }
+    }
+
+    // 2. SUBSCRIPTION MODAL & CALCULATOR
+    function openModalSubscription() {
+      document.getElementById('modal-subscription').classList.remove('hidden');
+      recalculateEndDate();
+    }
+    function closeModalSubscription() {
+      document.getElementById('modal-subscription').classList.add('hidden');
+    }
+
+    function recalculateEndDate() {
+      const startDateVal = document.getElementById('sub-start-date').value;
+      const duration = parseInt(document.getElementById('sub-duration').value) || 1;
+
+      if (!startDateVal) return;
+      const startDate = new Date(startDateVal);
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + duration);
+
+      const h7Date = new Date(endDate);
+      h7Date.setDate(h7Date.getDate() - 7);
+
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      document.getElementById('calc-end-date').innerText = endDate.toLocaleDateString('id-ID', options);
+      document.getElementById('calc-h7-date').innerText = `${h7Date.toLocaleDateString('id-ID', options)} (H-7 Aktif)`;
+    }
+
+    function onSubProviderChange(val) {
+      if (val === 'antigravity') {
+        document.getElementById('sub-duration').value = "4";
+        document.querySelector('input[name="pricing-scheme"][value="trial"]').checked = true;
+        togglePricingInputs('trial');
+      } else {
+        document.getElementById('sub-duration').value = "1";
+        document.querySelector('input[name="pricing-scheme"][value="regular"]').checked = true;
+        togglePricingInputs('regular');
+      }
+      recalculateEndDate();
+    }
+
+    function togglePricingInputs(type) {
+      const trialDiv = document.getElementById('trial-inputs');
+      if (type === 'trial') {
+        trialDiv.classList.remove('hidden');
+      } else {
+        trialDiv.classList.add('hidden');
+      }
+    }
+
+    function handleSubSubmit(e) {
+      e.preventDefault();
+      closeModalSubscription();
+      triggerToast("✨ Pengaturan langganan & pengingat H-7 berhasil disimpan!", "cute");
+      confetti({ particleCount: 50, spread: 60 });
+    }
+
+    // 3. THEME CONTROLLER
+    function switchTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+
+      const btnCute = document.getElementById('btn-theme-cute');
+      const btnHacker = document.getElementById('btn-theme-hacker');
+      const btnObsidian = document.getElementById('btn-theme-obsidian');
+      const virusBanner = document.getElementById('hacker-virus-banner');
+      const mascotEmoji = document.getElementById('mascot-emoji');
+      const versionTag = document.getElementById('version-tag');
+
+      [btnCute, btnHacker, btnObsidian].forEach(btn => {
+        btn.className = "squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 text-stone-500 hover:text-black dark:hover:text-white";
+      });
+
+      if (theme === 'cute') {
+        btnCute.className = "squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 bg-rose-500 text-white shadow-md";
+        virusBanner.classList.add('hidden');
+        mascotEmoji.innerText = '🌸';
+        versionTag.innerText = '✨ Kawaii v1.4';
+        stopMatrixRain();
+        updateThreeMascot('cute');
+        triggerToast("🎀 Tema: Kawaii Pastel Dream", "cute");
+      } else if (theme === 'hacker') {
+        btnHacker.className = "squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 bg-green-500 text-black shadow-md font-mono";
+        virusBanner.classList.remove('hidden');
+        mascotEmoji.innerText = '💀';
+        versionTag.innerText = '[ROOT_OVERRIDE]';
+        startMatrixRain();
+        updateThreeMascot('hacker');
+        triggerToast("💀 WARNING: Cyber-Virus Matrix Activated!", "hacker");
+      } else if (theme === 'obsidian') {
+        btnObsidian.className = "squishy-btn px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 bg-emerald-500 text-black shadow-md";
+        virusBanner.classList.add('hidden');
+        mascotEmoji.innerText = '💎';
+        versionTag.innerText = 'Obsidian v1.4';
+        stopMatrixRain();
+        updateThreeMascot('obsidian');
+        triggerToast("💎 Tema: Obsidian Pro High-Tech", "obsidian");
+      }
+      lucide.createIcons();
+    }
+
+    // 4. MATRIX RAIN
+    function initMatrixRain() {
+      matrixCanvas = document.getElementById('matrix-canvas');
+      matrixCtx = matrixCanvas.getContext('2d');
+      matrixCanvas.width = window.innerWidth;
+      matrixCanvas.height = window.innerHeight;
+      const columns = Math.floor(matrixCanvas.width / 14);
+      matrixDrops = [];
+      for (let i = 0; i < columns; i++) matrixDrops[i] = Math.floor(Math.random() * -100);
+      window.addEventListener('resize', () => {
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+      });
+    }
+
+    function drawMatrixRain() {
+      matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+      matrixCtx.fillStyle = '#00ff41';
+      matrixCtx.font = '14px monospace';
+      const characters = '0123456789ABCDEFﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
+      for (let i = 0; i < matrixDrops.length; i++) {
+        const text = characters.charAt(Math.floor(Math.random() * characters.length));
+        matrixCtx.fillText(text, i * 14, matrixDrops[i] * 14);
+        if (matrixDrops[i] * 14 > matrixCanvas.height && Math.random() > 0.975) matrixDrops[i] = 0;
+        matrixDrops[i]++;
+      }
+    }
+
+    function startMatrixRain() {
+      if (!matrixCanvas) initMatrixRain();
+      if (!matrixInterval) matrixInterval = setInterval(drawMatrixRain, 33);
+    }
+    function stopMatrixRain() {
+      if (matrixInterval) { clearInterval(matrixInterval); matrixInterval = null; }
+      if (matrixCtx && matrixCanvas) matrixCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+    }
+
+    // 5. COUNTDOWN TICKER
+    setInterval(() => {
+      if (remainingSeconds > 0) {
+        remainingSeconds--;
+        const hrs = Math.floor(remainingSeconds / 3600);
+        const mins = Math.floor((remainingSeconds % 3600) / 60);
+        const secs = remainingSeconds % 60;
+        const hStr = String(hrs).padStart(2, '0');
+        const mStr = String(mins).padStart(2, '0');
+        const sStr = String(secs).padStart(2, '0');
+
+        document.getElementById('timer-hours').innerText = hStr;
+        document.getElementById('timer-minutes').innerText = mStr;
+        document.getElementById('timer-seconds').innerText = sStr;
+
+        const cardCc = document.getElementById('card-cc-timer');
+        if (cardCc) cardCc.innerText = `${hStr}:${mStr}:${sStr}`;
+      }
+    }, 1000);
+
+    // 6. QUICK TRIGGER
+    function triggerQuickDepletion() {
+      remainingSeconds = 5 * 3600;
+      triggerToast("🌸 Limit tercatat! Countdown 5 Jam dimulai ulang yaa~", "cute");
+      confetti({ particleCount: 40, spread: 70, origin: { y: 0.8 }, colors: ['#f43f5e', '#ec4899', '#fbcfe8'] });
+    }
+
+    // 7. TOAST FEEDBACK
+    function triggerToast(message, variant = 'cute') {
+      const dock = document.getElementById('toast-dock');
+      const toast = document.createElement('div');
+      let styleClasses = "bg-white text-rose-900 border-2 border-pink-300 shadow-xl";
+      if (variant === 'hacker') styleClasses = "bg-black text-green-400 border-2 border-green-500 font-mono shadow-green-500/50";
+      if (variant === 'obsidian') styleClasses = "bg-zinc-900 text-emerald-300 border border-emerald-500/40";
+
+      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl ${styleClasses} text-xs font-bold flex items-center gap-2.5 transition-all transform translate-y-3 opacity-0 duration-200`;
+      toast.innerHTML = `<span>✨</span> <span>${message}</span>`;
+      dock.appendChild(toast);
+      setTimeout(() => toast.classList.remove('translate-y-3', 'opacity-0'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-3');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // 8. TAB NAVIGATION
+    function switchTab(tabId) {
+      const tabs = ['dashboard', 'accounts', 'subscriptions', 'settings'];
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`nav-${t}`).className = "squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5";
+      });
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      document.getElementById(`nav-${tabId}`).className = "squishy-btn px-5 py-2.5 text-xs font-extrabold flex items-center gap-2 bg-rose-500 text-white shadow-lg shadow-rose-500/25";
+    }
+
+    // 9. PUSH HP & EXPORT
+    function requestMobilePushPermission() {
+      triggerToast("📱 Simulasi Web Push HP berhasil: Notifikasi H-2 dan H-7 terhubung!", "cute");
+    }
+    function exportDataJSON() {
+      const data = {
+        app: "ChronosAI",
+        version: "1.4.0",
+        theme: currentTheme,
+        timestamp: new Date().toISOString(),
+        subscriptions: [
+          { provider: "Antigravity", plan: "Enterprise", durationMonths: 4, isTrial: true, paidStartMonth: 5, alertH7: true },
+          { provider: "Claude Code", plan: "Pro Tier", durationMonths: 12, regularFee: 20 },
+          { provider: "Cursor Pro", plan: "Individual", durationMonths: 3, discountFee: 15 }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `chronos-backup-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      triggerToast("File cadangan JSON berhasil diunduh!", "cute");
+    }
+
+    // 10. THREE.JS 3D CANVAS
+    let scene, camera, renderer, mascotMesh;
+    function initThreeMascot() {
+      const container = document.getElementById('three-container');
+      const width = container.clientWidth || 240;
+      const height = container.clientHeight || 200;
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.z = 3.5;
+
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
+
+      const light = new THREE.AmbientLight(0xffffff, 0.9);
+      scene.add(light);
+      const point = new THREE.PointLight(0xf43f5e, 2, 50);
+      point.position.set(4, 4, 4);
+      scene.add(point);
+
+      const geometry = new THREE.TorusGeometry(0.8, 0.35, 16, 100);
+      const material = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2, metalness: 0.1 });
+      mascotMesh = new THREE.Mesh(geometry, material);
+      scene.add(mascotMesh);
+
+      let clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        mascotMesh.rotation.x = Math.sin(t * 1.2) * 0.4;
+        mascotMesh.rotation.y += 0.012;
+        const scale = 1 + Math.sin(t * 2.5) * 0.05;
+        mascotMesh.scale.set(scale, scale, scale);
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      let isDragging = false, prevX = 0, prevY = 0;
+      container.addEventListener('mousedown', (e) => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
+      window.addEventListener('mouseup', () => isDragging = false);
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        mascotMesh.rotation.y += (e.clientX - prevX) * 0.01;
+        mascotMesh.rotation.x += (e.clientY - prevY) * 0.01;
+        prevX = e.clientX; prevY = e.clientY;
+      });
+    }
+
+    function updateThreeMascot(theme) {
+      if (!mascotMesh) return;
+      if (theme === 'cute') {
+        mascotMesh.material.color.setHex(0xf43f5e);
+        mascotMesh.material.wireframe = false;
+      } else if (theme === 'hacker') {
+        mascotMesh.material.color.setHex(0x00ff41);
+        mascotMesh.material.wireframe = true;
+      } else if (theme === 'obsidian') {
+        mascotMesh.material.color.setHex(0x10b981);
+        mascotMesh.material.wireframe = false;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initThreeMascot();
+      initMatrixRain();
+      recalculateEndDate();
+    });
+  </script>
+</body>
+</html>
