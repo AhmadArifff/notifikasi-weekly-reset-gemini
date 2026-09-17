@@ -103,4 +103,16 @@ Sebelum kode dinyatakan **DONE**:
 2. **Interactive Flow Check**: Seluruh aksi tombol (Edit, Tambah, Hapus, Quick Trigger, Push Test, Export) berfungsi 100%.
 3. **Typewriter Mechanics Check**: Banner rekomendasi armada mengetik sendiri dengan kursor aktif tanpa memicu *layout shift*.
 4. **Data Produksi Realistis**: Teruji menggunakan data 5 provider AI terkemuka.
-5. **Independent Review**: Kode disetujui oleh Reviewer (`qa-engineer` atau `tech-critic`).
+5. **Independent Review & Token-Efficient Verification**: Kode diverifikasi melalui inspeksi statis atau review logika tanpa memanggil Playwright otomatis (kecuali diminta eksplisit oleh pengguna).
+
+---
+
+## 7. Kebijakan Konservasi Token & Pembatasan Tool (Playwright Policy)
+
+### 🚫 Aturan 7.1: Larangan Penggunaan Otomatis Skill Playwright (Hemat Token)
+* **DILARANG MENGGUNAKAN SKILL PLAYWRIGHT SECARA OTOMATIS**: Seluruh agen AI **DILARANG** memanggil skill Playwright (`playwright`, `playwright-skill`, Playwright MCP, browser subagent, atau perintah automasi browser lainnya) atas inisiatif sendiri demi menghemat konsumsi token (*token conservation / anti-waste*).
+* **PENGECUALIAN TUNGGAL**: Skill Playwright **HANYA BOLEH DIGUNAKAN JIKA DAN HANYA JIKA USER SECARA EKSPLISIT MEMINTA PENGUJIAN MENGGUNAKAN PLAYWRIGHT/BROWSER**.
+* **Metode Verifikasi Default**:
+  * Lakukan verifikasi berbasis pembacaan kode statis (*static inspection / code review*).
+  * Uji logika menggunakan script / command shell lokal yang ringan.
+  * Berikan instruksi kepada pengguna untuk merefresh dan mencoba antarmuka langsung di browser pengguna.
