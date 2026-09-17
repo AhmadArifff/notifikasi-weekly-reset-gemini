@@ -14,75 +14,87 @@
 
 ---
 
-## 1. Aturan Khusus Langganan, Durasi, Promo & Trial
+## 1. Zero Overlap & Layer Stacking Standards (Anti-Tumpang Tindih)
 
-Untuk menangani skema langganan riil developer (seperti Antigravity trial 4 bulan gratis atau promo diskon):
+Untuk mencegah dialog, dropdown, atau notifikasi saling tumpang tindih (*z-index conflict / layout clipping*):
 
-### 📅 1.1 Kalkulasi Tanggal Berakhir & Peringatan H-7
-* Tanggal berakhir (`end_date`) **WAJIB** dihitung secara presisi menggunakan fungsi tanggal resmi (`addMonths(startDate, durationMonths)` dari `date-fns`), bukan sekadar perkiraan 30 hari manual.
-* **Jadwal Pemicu Peringatan**:
-  * Peringatan H-7: Terpicu saat $\text{end\_date} - \text{CURRENT\_DATE} = 7\text{ hari}$.
-  * Peringatan H-3: Terpicu saat $\text{end\_date} - \text{CURRENT\_DATE} = 3\text{ hari}$.
-  * Peringatan H-1: Terpicu saat $\text{end\_date} - \text{CURRENT\_DATE} = 1\text{ hari}$.
+### 🚫 Aturan 1.1: Stacking Context & Portal Layering
+* **DILARANG** meletakkan dropdown notifikasi mengambang secara `absolute` di dalam header yang memiliki properti `overflow` atau `flex-wrap` tanpa backdrop pembatas. Hal ini memicu elemen terpotong (*clipped*) atau menabrak tombol lain di layar mobile/laptop.
+* **WAJIB MENGGUNAKAN POLA SLIDE-OVER DRAWER / BACKDROP MODAL**:
+  * Pusat Notifikasi Laptop **WAJIB** memiliki layer backdrop semi-transparan (`fixed inset-0 bg-black/50 backdrop-blur-sm z-50`) dengan panel kartu berbayang tegas di sisi kanan (`fixed top-0 right-0 h-full w-full max-w-md z-50`).
+  * Klik di area luar backdrop atau tombol silang (*esc / close*) **WAJIB** menutup panel secara instan tanpa mengacaukan layout di belakangnya.
+  * Toast Notifikasi diletakkan pada layer paling atas terpisah (`z-[100]`) di pojok layar dengan batas margin aman (*safe area padding*).
 
-### 💰 1.2 Penanganan Masa Trial & Harga Bertahap (Trial-to-Paid)
+### 🎯 Aturan 1.2: Interactive Completeness Contract (Semua Elemen Wajib Fungsional)
+* **DILARANG MENYISAKAN TOMBOL MATI**: Setiap tombol di dalam prototipe dan aplikasi (`Edit Konfigurasi`, `Tautkan Akun`, `Limit Kena Sekarang`, `Tandai Dibaca`, `Filter Notif`, `Uji Push HP`, `Export JSON`, dll.) **WAJIB MEMILIKI AKSI NYATA**:
+  * Tombol `Edit Konfigurasi` pada kartu akun wajib memunculkan modal edit yang terisi data akun tersebut dan dapat disimpan atau dihapus secara nyata.
+  * Tombol notifikasi yang diklik wajib langsung mengarahkan pengguna ke tab/kartu terkait (misal: klik alert H-7 langsung membuka tab Langganan dan menyorot Antigravity).
+
+---
+
+## 2. Standar Data Produksi Nyata (Production Dataset)
+
+* **DILARANG MENGGUNAKAN DATA ASAL-ASALAN**: Prototipe dan testing wajib menggunakan armada akun AI riil:
+  1. **Antigravity (Google DeepMind)**: `deepmind-core-fleet@alpha.corp`, kuota mingguan pool (Senin 07:00 UTC / 14:00 WIB), masa trial 4 bulan gratis (Bulan ke-4 aktif, jatuh tempo H-7, bulan ke-5 bayar $30.00/bln).
+  2. **Claude Code (Anthropic)**: `lead-engineer@agency.dev`, rolling window 5 jam ($20.00/bln).
+  3. **Cursor Pro (Anysphere)**: `arif.workspace@cursor.sh`, 500 fast requests bulanan (Promo $15.00/bln).
+  4. **OpenCode (Open-Source Cluster)**: `vllm-cluster-01.local`, Qwen 2.5 72B & DeepSeek-Coder-V2, rolling 24 jam ($0.00 Self-Hosted).
+  5. **OpenAI Codex / ChatGPT Team**: `team-backup@openai.org`, GPT-4o & o3-mini (80 msgs / 3 jam rolling, $25.00/bln).
+
+---
+
+## 3. Aturan Khusus Langganan, Durasi, Promo & Trial
+
+### 📅 3.1 Kalkulasi Tanggal Berakhir & Peringatan H-7
+* Tanggal berakhir (`end_date`) **WAJIB** dihitung presisi menggunakan fungsi tanggal resmi (`addMonths(startDate, durationMonths)`).
+* Peringatan H-7 aktif saat $\text{end\_date} - \text{CURRENT\_DATE} = 7\text{ hari}$.
+
+### 💰 3.2 Penanganan Masa Trial & Harga Bertahap (Trial-to-Paid)
 * Jika `is_trial = true` dengan `trial_duration_months = 4`:
   * Selama bulan ke-1 s/d ke-4, tagihan aktif tercatat senilai **$0.00** (*Free Trial Period*).
-  * Pada bulan ke-5 (`paid_start_month = 5`), sistem otomatis memperbarui tagihan ke nominal reguler (misal $30.00/bln).
-  * Kalkulasi *Monthly Burn Rate* di dashboard harus cerdas: tidak boleh memasukkan biaya langganan yang masih dalam status *Free Trial*.
+  * Pada bulan ke-5 (`paid_start_month = 5`), tagihan beralih ke tarif reguler ($30.00/bln).
+  * *Monthly Burn Rate* hanya menghitung akun yang telah aktif membayar.
 
 ---
 
-## 2. Arsitektur Notifikasi: Mobile Web Push vs Laptop Notification Center
+## 4. Arsitektur Notifikasi: Mobile Web Push vs Laptop Notification Drawer
 
-> ⚠️ **CATATAN MUTLAK**: Integrasi Discord Webhook **DITIADAKAN SEPENUHNYA**. Jangan membuat kode, endpoint, atau input form untuk Discord.
+> ⚠️ **CATATAN MUTLAK**: Integrasi Discord Webhook **DITIADAKAN SEPENUHNYA**.
 
-### 📱 2.1 Notifikasi di Smartphone (Mobile Web Push)
+### 📱 4.1 Notifikasi di Smartphone (Mobile Web Push)
 * Menggunakan standar **Web Push API** (VAPID) melalui Service Worker.
-* Notifikasi harus mampu berdering dan memunculkan banner di layar kunci HP pengguna meskipun aplikasi PWA dalam kondisi tertutup.
-* Notifikasi mencakup:
-  * Pengingat H-2 jam sebelum kuota agent di-reset.
-  * Pengingat H-7 sebelum langganan habis atau tagihan pertama trial dimulai.
+* Menampilkan native push banner di layar HP saat H-2 jam sebelum reset kuota dan H-7 sebelum langganan habis.
 
-### 💻 2.2 Notifikasi di Laptop / Komputer (In-App Notification Center)
-* Di tampilan desktop/laptop, sistem **WAJIB** menyediakan elemen **Pusat Notifikasi Interaktif** berupa:
-  1. Ikon Lonceng di Header dengan indikator angka merah/pink untuk pesan yang **Belum Dibaca (*Unread Count*)**.
-  2. Dropdown / Panel drawer yang memuat riwayat notifikasi.
-  3. Status per notifikasi: **Belum Dibaca** (titik bercahaya) dan **Sudah Dibaca** (redup).
-  4. Aksi interaktif instan (*Optimistic UI*):
-     * Tombol *"Tandai Semua Sudah Dibaca"*
-     * Tombol toggle per item: *"Tandai Dibaca"* / *"Tandai Belum Dibaca"*
-     * Filter tab: *Semua* vs *Belum Dibaca*.
+### 💻 4.2 Notifikasi di Laptop / Komputer (In-App Slide-Over Drawer)
+* Ikon Lonceng di Header dengan *badge counter* dinamis.
+* Drawer samping yang bersih, bebas tumpang tindih, dengan tombol:
+  * *"Tandai Semua Sudah Dibaca"*
+  * Toggle status per notifikasi (Sudah / Belum Dibaca)
+  * Filter tab (*Semua* vs *Belum Dibaca*)
+  * Hapus notifikasi (*Delete*)
+  * Klik item notifikasi untuk langsung bernavigasi ke akun / tagihan terkait.
 
 ---
 
-## 3. Aturan Desain & Styling Tri-Theme (Genjutsu UI)
+## 5. Aturan Desain Tri-Theme (Genjutsu UI)
 
-### 🌸 3.1 Tema Kawaii Dream (Feminine Pastel - Default)
+### 🌸 5.1 Tema Kawaii Dream (Feminine Pastel - Default)
 * **Kontras Tinggi Anti-Pudar**: Teks utama wajib menggunakan warna **Deep Berry Plum (`#831843`)** di atas kartu awan putih bersih dengan border pink pastel tegas (`#fbcfe8`). Kontras rasio $\ge 7:1$ (Lolos WCAG AA).
 * **Fisika Membal (Mochi Physics)**: Tombol menggunakan efek membal squishy saat hover/active (`scale(1.05)` saat hover, `scale(0.95)` saat klik).
 
-### 💀 3.2 Tema Cyber-Virus Matrix (Hacker Extreme)
+### 💀 5.2 Tema Cyber-Virus Matrix (Hacker Extreme)
 * **Matrix Digital Rain Canvas**: Background canvas rintik hujan karakter hijau neon (`#00ff41`) di atas latar hitam pekat. Loop animasi wajib dihentikan saat tema tidak aktif atau tab diminimalkan.
 * **Text Scramble Auto-Typing**: Teks decoding karakter acak sebelum menampilkan teks asli. Wajib font monospace (`Fira Code`).
 
-### 💎 3.3 Tema Obsidian Pro High-Tech
+### 💎 5.3 Tema Obsidian Pro High-Tech
 * Glassmorphism obsidian gelap premium dengan Border Beam Magic UI dan tipografi bersih.
 
 ---
 
-## 4. Keamanan, Validasi Zod & Vercel Deployment
-
-* **Validasi Skema Zod**: Form langganan wajib memvalidasi `start_date` (format ISO tanggal valid), `duration_months` (angka bulat positif $\ge 1$), dan `regular_amount` (angka non-negatif).
-* **Zero Secret Leakage**: Variabel `SUPABASE_SERVICE_ROLE_KEY` dan `VAPID_PRIVATE_KEY` hanya ada di server/edge, tidak pernah berawalan `NEXT_PUBLIC_`.
-* **Vercel Headers**: Service worker header `Cache-Control: public, max-age=0, must-revalidate` dan security headers lengkap.
-
----
-
-## 5. Definition of Done (DoD) & Reviewer Verification
+## 6. Definition of Done (DoD) & Reviewer Verification
 
 Sebelum kode dinyatakan **DONE**:
-1. **Pemeriksaan Keselarasan Prototype**: Alur formulir tanggal mulai, durasi langganan, dan pusat notifikasi lonceng laptop sesuai 100% dengan [prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/prototype.html).
-2. **Tidak Ada Sisa Kode Discord**: Memastikan zero dependencies atau fungsi terkait Discord webhook.
-3. **Validasi Notifikasi Laptop**: Fitur ubah status pesan sudah dibaca / belum dibaca berjalan secara reaktif.
+1. **Zero Overlap Check**: Seluruh panel notifikasi dan modal form tidak bertabrakan dengan elemen lain di viewport desktop maupun mobile.
+2. **Interactive Flow Check**: Seluruh aksi tombol (Edit, Tambah, Hapus, Quick Trigger, Push Test, Export) berfungsi 100%.
+3. **Data Produksi Realistis**: Teruji menggunakan data 5 provider AI terkemuka.
 4. **Independent Review**: Kode disetujui oleh Reviewer (`qa-engineer` atau `tech-critic`).
