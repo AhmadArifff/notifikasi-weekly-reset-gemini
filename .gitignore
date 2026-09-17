@@ -1,3 +1,28 @@
-.playwright-mcp/
+# Dependencies
 node_modules/
+/.pnp
+.pnp.js
+
+# Testing & MCP
+.playwright-mcp/
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# Env files
+.env*.local
+.env
+
+# System files
 .DS_Store
+*.pem
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME SYSTEM: TOKENS & VISUAL UNIVERSES (RULES.md Section 5)
+   ============================================================ */
+
+/* 1. KAWAII DREAM (FEMININE PASTEL - DEFAULT) */
+html[data-theme="cute"] {
+  --bg-base: #fff5f7;
+  --bg-pattern: radial-gradient(#fecdd3 1.5px, transparent 1.5px);
+  --bg-card: #ffffff;
+  --border-card: #fbcfe8;
+  --border-width: 2px;
+  --text-main: #831843;       /* Deep Berry Plum - Super High Contrast */
+  --text-muted: #be185d;      /* Rose Medium */
+  --accent-primary: #f43f5e;  /* Strawberry Rose */
+  --accent-secondary: #a855f7;/* Lavender Lilac */
+  --accent-pill: #ffe4e6;     /* Pastel Pink Pill */
+  --accent-pill-text: #9f1239;
+  --font-family: 'Plus Jakarta Sans', sans-serif;
+  --radius-box: 24px;
+  --shadow-soft: 0 16px 36px -10px rgba(244, 63, 94, 0.15), 0 0 0 1px rgba(251, 207, 232, 0.6);
+  --badge-radius: 9999px;
+  --button-hover-transform: scale(1.04) rotate(-1deg);
+  --button-active-transform: scale(0.95) rotate(1deg);
+}
+
+/* 2. CYBER-VIRUS MATRIX (HACKER EXTREME) */
+html[data-theme="hacker"] {
+  --bg-base: #000000;
+  --bg-pattern: none;
+  --bg-card: rgba(4, 18, 7, 0.95);
+  --border-card: #00ff41;
+  --border-width: 1.5px;
+  --text-main: #00ff41;       /* Radioactive Phosphor Green */
+  --text-muted: #008f11;      /* Dark Green Terminal */
+  --accent-primary: #00ff41;
+  --accent-secondary: #00f0ff;/* Glitch Cyan */
+  --accent-pill: rgba(0, 255, 65, 0.15);
+  --accent-pill-text: #00ff41;
+  --font-family: 'Fira Code', monospace;
+  --radius-box: 4px;
+  --shadow-soft: 0 0 25px rgba(0, 255, 65, 0.35), inset 0 0 12px rgba(0, 255, 65, 0.08);
+  --badge-radius: 4px;
+  --button-hover-transform: translateY(-2px);
+  --button-active-transform: translateY(1px);
+}
+
+/* 3. OBSIDIAN PRO HIGH-TECH (FLAGSHIP DARK) */
+html[data-theme="obsidian"] {
+  --bg-base: #09090b;
+  --bg-pattern: radial-gradient(#27272a 1px, transparent 1px);
+  --bg-card: rgba(24, 24, 28, 0.88);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-width: 1px;
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --accent-primary: #10b981;  /* Emerald Neon */
+  --accent-secondary: #6366f1;/* Indigo Glow */
+  --accent-pill: rgba(16, 185, 129, 0.15);
+  --accent-pill-text: #34d399;
+  --font-family: 'Inter', sans-serif;
+  --radius-box: 16px;
+  --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+  --badge-radius: 10px;
+  --button-hover-transform: translateY(-2px);
+  --button-active-transform: scale(0.98);
+}
+
+body {
+  background-color: var(--bg-base);
+  background-image: var(--bg-pattern);
+  background-size: 24px 24px;
+  color: var(--text-main);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* SQUISHY MOCHI BUTTONS */
+.squishy-btn {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.2s ease;
+  border-radius: var(--badge-radius);
+  user-select: none;
+}
+.squishy-btn:hover {
+  transform: var(--button-hover-transform);
+}
+.squishy-btn:active {
+  transform: var(--button-active-transform);
+}
+
+/* THEME CARDS */
+.theme-card {
+  background-color: var(--bg-card);
+  border: var(--border-width) solid var(--border-card);
+  border-radius: var(--radius-box);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* MAGIC UI BORDER BEAM EFFECT */
+.border-beam-box {
+  position: relative;
+  border-radius: var(--radius-box);
+  overflow: hidden;
+  padding: 1px;
+}
+.border-beam-box::before {
+  content: '';
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(from 0deg, transparent 0 320deg, var(--accent-primary) 360deg);
+  animation: borderBeamRotate 6s linear infinite;
+}
+@keyframes borderBeamRotate {
+  to { transform: rotate(360deg); }
+}
+.border-beam-content {
+  position: relative;
+  background-color: var(--bg-card);
+  border-radius: calc(var(--radius-box) - 1px);
+}
+
+/* PILL BADGE */
+.pill-badge {
+  background: var(--accent-pill);
+  color: var(--accent-pill-text);
+  border-radius: var(--badge-radius);
+  border: 1px solid var(--border-card);
+  font-weight: 700;
+}
+
+/* TYPEWRITER BLINKING CURSOR & CONTAINER (RULES.md Rule 1.3: CLS = 0) */
+@keyframes typewriterCursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.typewriter-cursor {
+  display: inline-block;
+  animation: typewriterCursorBlink 0.8s infinite;
+  will-change: opacity;
+  user-select: none;
+  vertical-align: middle;
+  font-weight: 900;
+}
+.typewriter-cursor.hacker-cursor {
+  color: #00ff41;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+}
+.typewriter-cursor.cute-cursor {
+  color: var(--accent-primary);
+}
+.typewriter-cursor.obsidian-cursor {
+  color: #10b981;
+}
+
+/* ZERO-OVERLAP DRAWER TRANSITION */
+#notification-drawer {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}

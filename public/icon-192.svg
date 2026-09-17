@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="44" fill="#0f172a" />
+  <circle cx="96" cy="96" r="70" fill="none" stroke="url(#roseGrad)" stroke-width="8" stroke-dasharray="320" stroke-dashoffset="60" />
+  <circle cx="96" cy="96" r="54" fill="#1e293b" />
+  <!-- Stylized Hourglass / Chronos symbol -->
+  <path d="M72 64 H120 L102 96 L120 128 H72 L90 96 Z" fill="url(#roseGrad)" />
+  <circle cx="96" cy="96" r="4" fill="#ffffff" />
+</svg>
