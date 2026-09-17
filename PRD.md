@@ -7,7 +7,7 @@
 | Document Metadata | Detail |
 | :--- | :--- |
 | **Project Name** | **ChronosAI** (Weekly & Rolling AI Reset & Subscription Watcher) |
-| **Document Version** | `v1.5.0` (Zero Overlap Drawer, Production Datasets & Full Interactive Actions) |
+| **Document Version** | `v1.6.0` (Smart Fleet Typewriter Animation Engine, Zero CLS & Multi-Theme Auto-Typing) |
 | **Author** | Senior Product Manager, Genjutsu Design Architect & Enterprise System Engineer |
 | **Status** | Approved for Development |
 | **Target Platforms** | Cross-Platform PWA (Mobile iOS/Android, Tablet, Desktop Web) |
@@ -37,6 +37,9 @@ Pembaruan arsitektur v1.5.0 menyelesaikan kendala antarmuka dan interaksi riil:
      * **OpenAI Codex / ChatGPT Team**: GPT-4o & o3-mini rolling 3 jam ($25.00/bln).
 3. **Fungsionalitas Interaktif Lengkap (Interactive Completeness)**:
    * Setiap tombol memiliki aksi nyata: **Edit Konfigurasi Akun** (memunculkan modal edit dan menyimpan perubahan), **Hapus Akun**, **Limit Kena Sekarang!**, **Tambah Langganan**, dan **Uji Coba Push HP**.
+4. **Smart Fleet Typewriter & Auto-Typing Engine (RULES.md Rule 1.3)**:
+   * Menggantikan teks statis pada headline rekomendasi cerdas dengan animasi mengetik otomatis karakter demi karakter.
+   * Dilengkapi kursor berkedip GPU-accelerated (`|` / `█`), zero layout shift (`min-h-[32px]`), text-scramble decoding effect untuk tema Cyber Matrix, dan rotasi otomatis antar armada siap pakai.
 
 ---
 
@@ -44,6 +47,7 @@ Pembaruan arsitektur v1.5.0 menyelesaikan kendala antarmuka dan interaksi riil:
 
 Berkas **[prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/prototype.html)** adalah acuan wajib (*Single Source of Truth*) yang menyajikan alur semi-final aplikasi:
 * Pusat notifikasi laptop berupa Slide-Over Drawer dengan backdrop yang bersih dan bebas tumpang tindih.
+* Headline rekomendasi armada mengetik sendiri secara dinamis dengan kursor aktif (*typewriter animation engine*).
 * Form edit dan tambah akun yang berfungsi secara reaktif (*CRUD in-memory state*).
 * Tabel langganan dinamis yang otomatis menghitung ulang *Monthly Burn Rate*.
 
@@ -61,9 +65,15 @@ Berkas **[prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/no
 * Mode jadwal mingguan/bulanan (tahan DST & IANA Timezone).
 * Mode Rolling Window dengan tombol aksi cepat **"Limit Kena Sekarang!"** yang langsung memulai hitungan mundur dan memicu efek partikel.
 
-### 3.4 EPIC 4: Smart Fleet Recommender (Readiness Matrix)
+### 3.4 EPIC 4: Smart Fleet Recommender (Readiness Matrix & Typewriter Engine)
 * Status Kesiapan: 🟢 `READY NOW (100%)`, 🟡 `RESET IMMINENT`, 🔴 `RECHARGING`.
 * Banner rekomendasi cerdas yang menunjuk akun terbaik untuk dipakai saat ini.
+* **Typewriter & Auto-Typing Engine (RULES.md Rule 1.3)**:
+  - **Zero CLS**: Container headline memiliki tinggi minimum terkunci (`min-h-[32px]`) sehingga tidak terjadi pergeseran layout saat karakter diketik dari panjang 0 hingga penuh.
+  - **Blinking Cursor**: Animasi CSS `@keyframes` opacity murni dengan indikator `|` (Kawaii/Obsidian) dan `█` (Cyber-Virus Matrix).
+  - **Kecepatan Organik**: Cadence pengetikan bervariasi secara alami antara 45ms - 75ms per karakter, dengan fast-delete 22ms per karakter.
+  - **Cyber-Scramble Decoding**: Karakter pada mode hacker didekripsi acak dari simbol matriks (`!@#$%^&*<>_01X#`) sebelum mengunci ke huruf asli.
+  - **Rotasi Cerdas & Timeout Cleansing**: Berotasi otomatis antar akun siap pakai dengan jeda baca 4.5 detik dan pembersihan `clearTimeout` aman saat perpindahan tema.
 
 ### 3.5 EPIC 5: Subscription Lifecycle, Durasi & Promo Engine (Diskon & Trial)
 * Input tanggal awal (`start_date`), durasi (`duration_months`), dan skema promo (Reguler, Diskon, atau Trial 4 bulan gratis).

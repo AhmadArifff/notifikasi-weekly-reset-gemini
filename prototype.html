@@ -152,6 +152,30 @@
       font-weight: 700;
     }
 
+    /* TYPEWRITER BLINKING CURSOR & CONTAINER (RULES.md Rule 1.3: CLS = 0) */
+    @keyframes typewriterCursorBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      animation: typewriterCursorBlink 0.8s infinite;
+      will-change: opacity;
+      user-select: none;
+      vertical-align: middle;
+      font-weight: 900;
+    }
+    .typewriter-cursor.hacker-cursor {
+      color: #00ff41;
+      text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+    }
+    .typewriter-cursor.cute-cursor {
+      color: var(--accent-primary);
+    }
+    .typewriter-cursor.obsidian-cursor {
+      color: #10b981;
+    }
+
     /* ZERO-OVERLAP DRAWER TRANSITION */
     #notification-drawer {
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -366,10 +390,12 @@
                 <span class="pill-badge px-2.5 py-0.5 text-[10px] uppercase tracking-wider">✨ Rekomendasi Pintar</span>
                 <span class="text-xs opacity-75 font-semibold" id="recommender-status-tag">Armada Siap Pakai</span>
               </div>
-              <h3 class="text-lg font-black mt-1" id="recommender-headline">
-                Gunakan: <span class="underline decoration-wavy decoration-rose-400" id="recommender-target-name">Antigravity (DeepMind Research Team)</span>
+              <h3 class="text-lg font-black mt-1 min-h-[32px] flex items-center flex-wrap gap-1.5" id="recommender-headline">
+                <span id="recommender-prefix" class="opacity-90 font-bold">Gunakan:</span>
+                <span class="underline decoration-wavy decoration-rose-400 font-black tracking-tight" id="recommender-target-name">Antigravity (DeepMind Research Team)</span>
+                <span id="recommender-cursor" class="typewriter-cursor cute-cursor">|</span>
               </h3>
-              <p class="text-xs opacity-80" id="recommender-desc">Kuota 100% segar baru saja reset. Hindari jeda proses penulisan kode!</p>
+              <p class="text-xs opacity-80 min-h-[18px] transition-opacity duration-300" id="recommender-desc">Kuota 100% segar baru saja reset. Hindari jeda proses penulisan kode!</p>
             </div>
           </div>
           <button onclick="activateRecommendedAccount()" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md">
@@ -1211,10 +1237,123 @@
       confetti({ particleCount: 50, spread: 60 });
     }
 
-    // 6. FLEET RECOMMENDER INTERACTIVE ACTION
+    // 6. FLEET RECOMMENDER TYPEWRITER & AUTO-TYPING ENGINE (RULES.md Rule 1.3: CLS = 0)
+    const fleetRecommendations = [
+      {
+        targetName: "Antigravity (DeepMind Research Team)",
+        desc: "Kuota 100% segar baru saja reset. Hindari jeda proses penulisan kode!",
+        statusTag: "Armada Siap Pakai"
+      },
+      {
+        targetName: "OpenCode (Qwen 2.5 72B Cluster)",
+        desc: "Cluster lokal 0% cost, zero rate-limit, siap untuk task komputasi berat!",
+        statusTag: "Self-Hosted Active"
+      },
+      {
+        targetName: "Cursor Pro (Anysphere Fast Pool)",
+        desc: "500 fast requests kuota bulanan aktif. Siap untuk inline edit!",
+        statusTag: "Fast Pool Ready"
+      },
+      {
+        targetName: "Codex / ChatGPT Team Backup",
+        desc: "GPT-4o & o3-mini pool siap pakai untuk failover saat deadline mendesak!",
+        statusTag: "Standby Failover"
+      }
+    ];
+
+    let currentRecIndex = 0;
+    let typewriterTimeout = null;
+    let isDeleting = false;
+    let currentTypingCharIndex = 0;
+    const hackerScrambleGlyphs = "!@#$%^&*<>_01X#";
+
+    function startTypewriterLoop() {
+      if (typewriterTimeout) {
+        clearTimeout(typewriterTimeout);
+        typewriterTimeout = null;
+      }
+
+      const targetElement = document.getElementById('recommender-target-name');
+      const cursorElement = document.getElementById('recommender-cursor');
+      const prefixElement = document.getElementById('recommender-prefix');
+      const statusTagElement = document.getElementById('recommender-status-tag');
+      const descElement = document.getElementById('recommender-desc');
+
+      if (!targetElement) return;
+
+      const currentItem = fleetRecommendations[currentRecIndex];
+
+      // Theme-specific styling & cursor
+      if (currentTheme === 'hacker') {
+        prefixElement.innerText = "[EXEC_SELECT]:";
+        cursorElement.innerText = "█";
+        cursorElement.className = "typewriter-cursor hacker-cursor";
+        targetElement.className = "underline decoration-green-400 text-green-400 font-mono font-bold tracking-tight";
+      } else if (currentTheme === 'obsidian') {
+        prefixElement.innerText = "Rekomendasi:";
+        cursorElement.innerText = "|";
+        cursorElement.className = "typewriter-cursor obsidian-cursor";
+        targetElement.className = "underline decoration-emerald-400 text-emerald-400 font-bold tracking-tight";
+      } else {
+        prefixElement.innerText = "Gunakan:";
+        cursorElement.innerText = "|";
+        cursorElement.className = "typewriter-cursor cute-cursor";
+        targetElement.className = "underline decoration-wavy decoration-rose-400 font-black tracking-tight";
+      }
+
+      statusTagElement.innerText = currentItem.statusTag;
+      descElement.innerText = currentItem.desc;
+
+      const fullText = currentItem.targetName;
+
+      function step() {
+        if (!isDeleting) {
+          // TYPING FORWARD
+          currentTypingCharIndex++;
+
+          if (currentTheme === 'hacker' && currentTypingCharIndex < fullText.length) {
+            // Cyber scramble effect on the leading character
+            const scrambleChar = hackerScrambleGlyphs[Math.floor(Math.random() * hackerScrambleGlyphs.length)];
+            targetElement.innerText = fullText.substring(0, currentTypingCharIndex - 1) + scrambleChar;
+          } else {
+            targetElement.innerText = fullText.substring(0, currentTypingCharIndex);
+          }
+
+          if (currentTypingCharIndex >= fullText.length) {
+            targetElement.innerText = fullText;
+            isDeleting = true;
+            // Finished typing word, hold for 4.5s for readability
+            typewriterTimeout = setTimeout(step, 4500);
+            return;
+          }
+
+          // Natural human cadence (45ms - 75ms per character)
+          const delay = Math.floor(Math.random() * 30) + 45;
+          typewriterTimeout = setTimeout(step, delay);
+        } else {
+          // DELETING BACKWARD
+          currentTypingCharIndex--;
+          targetElement.innerText = fullText.substring(0, currentTypingCharIndex);
+
+          if (currentTypingCharIndex <= 0) {
+            isDeleting = false;
+            currentRecIndex = (currentRecIndex + 1) % fleetRecommendations.length;
+            typewriterTimeout = setTimeout(startTypewriterLoop, 350);
+            return;
+          }
+
+          // Fast deleting (22ms per char)
+          typewriterTimeout = setTimeout(step, 22);
+        }
+      }
+
+      step();
+    }
+
     function activateRecommendedAccount() {
-      triggerToast("✅ Antigravity (DeepMind Research Team) diaktifkan sebagai target aktif!", "cute");
-      confetti({ particleCount: 40, spread: 70 });
+      const activeRec = fleetRecommendations[currentRecIndex];
+      triggerToast(`✅ ${activeRec.targetName} diaktifkan sebagai target aktif!`, currentTheme);
+      confetti({ particleCount: 50, spread: 70 });
     }
 
     // 7. QUICK ACTION TRIGGER
@@ -1400,6 +1539,7 @@
         updateThreeMascot('obsidian');
         triggerToast("💎 Tema: Obsidian Pro High-Tech", "obsidian");
       }
+      startTypewriterLoop();
       lucide.createIcons();
     }
 
@@ -1523,6 +1663,7 @@
       renderSubscriptionsTable();
       updateDrawerUnreadCount();
       recalculateEndDate();
+      startTypewriterLoop();
     });
   </script>
 </body>

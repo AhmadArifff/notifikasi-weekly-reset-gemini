@@ -30,6 +30,11 @@ Untuk mencegah dialog, dropdown, atau notifikasi saling tumpang tindih (*z-index
   * Tombol `Edit Konfigurasi` pada kartu akun wajib memunculkan modal edit yang terisi data akun tersebut dan dapat disimpan atau dihapus secara nyata.
   * Tombol notifikasi yang diklik wajib langsung mengarahkan pengguna ke tab/kartu terkait (misal: klik alert H-7 langsung membuka tab Langganan dan menyorot Antigravity).
 
+### ⌨️ Aturan 1.3: Typewriter & Auto-Typing Animation Protocol (Anti-Layout Shift)
+* **Zero Cumulative Layout Shift (CLS = 0)**: Elemen yang menjalankan animasi mengetik (*typewriter*) pada banner rekomendasi atau headline **WAJIB** memiliki `min-height` terkunci (misal `min-h-[28px]` atau `min-h-[32px]`) agar saat karakter diketik satu per satu, tinggi baris tidak berguncang (*no layout jump*).
+* **Blinking Cursor GPU-Accelerated**: Indikator kursor mengetik (`█` untuk Hacker, `|` untuk Cute & Obsidian) wajib menggunakan animasi CSS berkedip (`animate-pulse` atau `@keyframes blink`) berbasis opacity tanpa layout thrashing.
+* **Safe Cadence & Timeout Cleansing**: Animasi mengetik karakter per karakter menggunakan kecepatan organik (45ms - 75ms per karakter) dan wajib membersihkan `clearTimeout` sebelum memulai pengetikan baru untuk mencegah proses balapan (*race condition*).
+
 ---
 
 ## 2. Standar Data Produksi Nyata (Production Dataset)
@@ -96,5 +101,6 @@ Untuk mencegah dialog, dropdown, atau notifikasi saling tumpang tindih (*z-index
 Sebelum kode dinyatakan **DONE**:
 1. **Zero Overlap Check**: Seluruh panel notifikasi dan modal form tidak bertabrakan dengan elemen lain di viewport desktop maupun mobile.
 2. **Interactive Flow Check**: Seluruh aksi tombol (Edit, Tambah, Hapus, Quick Trigger, Push Test, Export) berfungsi 100%.
-3. **Data Produksi Realistis**: Teruji menggunakan data 5 provider AI terkemuka.
-4. **Independent Review**: Kode disetujui oleh Reviewer (`qa-engineer` atau `tech-critic`).
+3. **Typewriter Mechanics Check**: Banner rekomendasi armada mengetik sendiri dengan kursor aktif tanpa memicu *layout shift*.
+4. **Data Produksi Realistis**: Teruji menggunakan data 5 provider AI terkemuka.
+5. **Independent Review**: Kode disetujui oleh Reviewer (`qa-engineer` atau `tech-critic`).
