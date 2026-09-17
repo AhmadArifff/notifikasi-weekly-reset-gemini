@@ -404,6 +404,33 @@
         </div>
       </div>
 
+      <!-- CLIENT DEMO TIME SIMULATOR TOOLBAR -->
+      <div class="theme-card p-3 md:p-4 flex flex-wrap items-center justify-between gap-3 border border-current/15">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-500 flex items-center justify-center text-base font-black">
+            🎮
+          </div>
+          <div>
+            <h5 class="text-xs font-black">Simulator Waktu Demo Klien</h5>
+            <p class="text-[10px] opacity-75">Uji coba instan siklus reset tanpa menunggu 7 hari sungguhan</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="simulateTimeScenario('h12')" class="squishy-btn px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 font-extrabold text-[11px] border border-amber-400/30 flex items-center gap-1.5">
+            <span>⚡</span> <span>H-12 Jam (Minggu Malam)</span>
+          </button>
+          <button onclick="simulateTimeScenario('h5s')" class="squishy-btn px-3 py-1.5 rounded-xl bg-emerald-500 text-white font-black text-[11px] shadow-md flex items-center gap-1.5 animate-pulse">
+            <span>🚀</span> <span>H-5 Detik (Reset Boom!)</span>
+          </button>
+          <button onclick="simulateTimeScenario('panic')" class="squishy-btn px-3 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-700 dark:text-rose-300 font-extrabold text-[11px] border border-rose-400/30 flex items-center gap-1.5">
+            <span>⚠️</span> <span>Limit Habis (Rabu Siang)</span>
+          </button>
+          <button onclick="simulateTimeScenario('normal')" class="squishy-btn px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/10 text-current font-extrabold text-[11px] flex items-center gap-1.5">
+            <span>🔄</span> <span>Waktu Riil</span>
+          </button>
+        </div>
+      </div>
+
       <!-- BENTO GRID -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
@@ -423,29 +450,111 @@
           </div>
         </div>
 
-        <!-- CARD 2: RADAR COUNTDOWN PALING KRITIS -->
+        <!-- CARD 2: RADAR COUNTDOWN UTAMA (WEEKLY & ROLLING DUAL MODE) -->
         <div class="theme-card p-6 md:col-span-2 flex flex-col justify-between space-y-6">
-          <div class="flex items-center justify-between">
+          <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></span>
-              <span class="text-xs font-black uppercase tracking-wider text-amber-500">⏳ Reset Paling Kritis</span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" id="radar-status-dot"></span>
+              <span class="text-xs font-black uppercase tracking-wider text-emerald-500" id="radar-badge-title">📅 SIKLUS MINGGUAN TETAP</span>
             </div>
-            <span class="pill-badge px-2.5 py-0.5 text-[11px]">Rolling 5 Jam</span>
+            <!-- DUAL MODE SWITCHER -->
+            <div class="flex items-center gap-1 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-current/10">
+              <button onclick="switchRadarMode('weekly')" id="tab-radar-weekly" class="px-3 py-1 text-xs font-extrabold rounded-lg bg-rose-500 text-white shadow-sm transition-all">
+                📅 Antigravity (Weekly Pool)
+              </button>
+              <button onclick="switchRadarMode('rolling')" id="tab-radar-rolling" class="px-3 py-1 text-xs font-extrabold rounded-lg opacity-70 hover:opacity-100 transition-all">
+                ⏳ Claude Code (Rolling 5 Jam)
+              </button>
+            </div>
           </div>
 
-          <div>
+          <!-- WEEKLY RADAR VIEW (ANTIGRAVITY) -->
+          <div id="radar-view-weekly" class="space-y-6">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border-2 border-rose-300 flex items-center justify-center font-black text-rose-600 text-lg">
+                AG
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                  <h4 class="text-xl font-black">Antigravity (DeepMind Research Fleet)</h4>
+                  <span class="pill-badge px-2.5 py-0.5 text-[11px] bg-rose-500/15 text-rose-600 border-rose-300 font-bold" id="weekly-status-badge">🟢 100% SEGAR (SIAP PAKAI)</span>
+                </div>
+                <p class="text-xs opacity-75">Siklus Kalender Mingguan: Setiap Senin 07:00 UTC (14:00 WIB)</p>
+              </div>
+            </div>
+
+            <!-- WEEKLY PROGRESS CIRCLE & ATOMIC TIMER -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6 p-4 rounded-2xl bg-black/5 dark:bg-black/30 border border-current/10">
+              <!-- CIRCULAR 7-DAY GAUGE -->
+              <div class="relative w-32 h-32 flex items-center justify-center flex-shrink-0">
+                <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8" class="opacity-10" fill="none" />
+                  <circle id="weekly-progress-ring" cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8" class="text-rose-500 transition-all duration-1000" fill="none" stroke-dasharray="264" stroke-dashoffset="110" stroke-linecap="round" />
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <span class="text-[9px] font-bold uppercase opacity-70">Hari Ini</span>
+                  <span class="text-sm font-black" id="weekly-today-name">Jumat</span>
+                  <span class="text-[10px] font-black text-rose-500" id="weekly-progress-label">58% Siklus</span>
+                </div>
+              </div>
+
+              <!-- 4-UNIT ATOMIC CLOCK -->
+              <div class="flex-1 text-center sm:text-left">
+                <p class="text-[11px] font-bold opacity-70 uppercase tracking-wider mb-2">Hitungan Mundur Reset Senin 14:00 WIB</p>
+                <div class="flex items-center justify-center sm:justify-start gap-2">
+                  <div class="px-3 py-2 rounded-xl bg-black/5 dark:bg-black/50 border border-current/15 text-center min-w-[55px]">
+                    <span class="text-2xl font-black text-rose-500" id="weekly-timer-days">03</span>
+                    <p class="text-[8px] font-bold uppercase opacity-70">Hari</p>
+                  </div>
+                  <span class="text-lg font-black opacity-40">:</span>
+                  <div class="px-3 py-2 rounded-xl bg-black/5 dark:bg-black/50 border border-current/15 text-center min-w-[55px]">
+                    <span class="text-2xl font-black text-rose-500" id="weekly-timer-hours">07</span>
+                    <p class="text-[8px] font-bold uppercase opacity-70">Jam</p>
+                  </div>
+                  <span class="text-lg font-black opacity-40">:</span>
+                  <div class="px-3 py-2 rounded-xl bg-black/5 dark:bg-black/50 border border-current/15 text-center min-w-[55px]">
+                    <span class="text-2xl font-black text-rose-500" id="weekly-timer-minutes">33</span>
+                    <p class="text-[8px] font-bold uppercase opacity-70">Menit</p>
+                  </div>
+                  <span class="text-lg font-black opacity-40">:</span>
+                  <div class="px-3 py-2 rounded-xl bg-black/5 dark:bg-black/50 border border-current/15 text-center min-w-[55px]">
+                    <span class="text-2xl font-black text-rose-500" id="weekly-timer-seconds">12</span>
+                    <p class="text-[8px] font-bold uppercase opacity-70">Detik</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- WEEKLY ACTION BAR -->
+            <div class="pt-3 border-t border-current/10 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2 text-xs font-semibold opacity-80">
+                <i data-lucide="zap" class="w-4 h-4 text-rose-500"></i>
+                <span>Antigravity pool reset otomatis setiap Senin pukul 14:00 WIB</span>
+              </div>
+              <button onclick="triggerWeeklyPanicDepletion()" class="squishy-btn px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center gap-2 shadow-md">
+                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                <span>Limit Mingguan Habis! (Hot-Swap Cadangan)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ROLLING RADAR VIEW (CLAUDE CODE) -->
+          <div id="radar-view-rolling" class="space-y-6 hidden">
             <div class="flex items-center gap-3.5">
               <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border-2 border-amber-300 flex items-center justify-center font-black text-amber-600 text-lg">
                 CC
               </div>
-              <div>
-                <h4 class="text-xl font-black" id="target-account-name">Claude Code (Production Lead Terminal)</h4>
+              <div class="flex-1">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                  <h4 class="text-xl font-black" id="target-account-name">Claude Code (Production Lead Terminal)</h4>
+                  <span class="pill-badge px-2.5 py-0.5 text-[11px] bg-amber-500/15 text-amber-600 border-amber-300">⏳ ROLLING 5 JAM</span>
+                </div>
                 <p class="text-xs opacity-75">Anthropic Claude 3.7 Sonnet / Opus Pro Tier</p>
               </div>
             </div>
 
             <!-- LIVE TIMER TICKER -->
-            <div class="mt-6 flex items-center gap-3">
+            <div class="flex items-center gap-3">
               <div class="px-5 py-3.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 text-center min-w-[80px]">
                 <span class="text-4xl font-black text-amber-500" id="timer-hours">02</span>
                 <p class="text-[10px] font-bold uppercase opacity-70">Jam</p>
@@ -461,18 +570,18 @@
                 <p class="text-[10px] font-bold uppercase opacity-70">Detik</p>
               </div>
             </div>
-          </div>
 
-          <!-- QUICK ACTION BUTTON -->
-          <div class="pt-4 border-t border-current/10 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2 text-xs font-semibold opacity-80">
-              <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i>
-              <span>Baru saja terkena limit token lagi?</span>
+            <!-- QUICK ACTION BUTTON -->
+            <div class="pt-4 border-t border-current/10 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2 text-xs font-semibold opacity-80">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i>
+                <span>Baru saja terkena limit token lagi?</span>
+              </div>
+              <button onclick="triggerQuickDepletion()" class="squishy-btn px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center gap-2 shadow-lg shadow-rose-500/30">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <span>Limit Kena Sekarang! (Mulai Ulang 5 Jam)</span>
+              </button>
             </div>
-            <button onclick="triggerQuickDepletion()" class="squishy-btn px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center gap-2 shadow-lg shadow-rose-500/30">
-              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-              <span>Limit Kena Sekarang! (Mulai Ulang 5 Jam)</span>
-            </button>
           </div>
         </div>
 
@@ -1579,16 +1688,174 @@
       if (matrixCtx && matrixCanvas) matrixCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
     }
 
-    // 15. COUNTDOWN TICKER
+    // 15. DUAL RADAR ENGINE: WEEKLY POOL (ANTIGRAVITY) & ROLLING WINDOW (CLAUDE CODE)
+    let activeRadarMode = 'weekly'; // 'weekly' or 'rolling'
+    const dayNamesId = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+    function calculateInitialWeeklySeconds() {
+      const now = new Date();
+      const currentDay = now.getUTCDay();
+      let daysUntilMonday = (1 - currentDay + 7) % 7;
+      if (daysUntilMonday === 0) {
+        if (now.getUTCHours() >= 7) daysUntilMonday = 7;
+      }
+      const nextMon = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilMonday, 7, 0, 0));
+      return Math.max(0, Math.floor((nextMon.getTime() - now.getTime()) / 1000));
+    }
+
+    let weeklyRemainingSeconds = calculateInitialWeeklySeconds();
+
+    function switchRadarMode(mode) {
+      activeRadarMode = mode;
+      const tabWeekly = document.getElementById('tab-radar-weekly');
+      const tabRolling = document.getElementById('tab-radar-rolling');
+      const viewWeekly = document.getElementById('radar-view-weekly');
+      const viewRolling = document.getElementById('radar-view-rolling');
+      const badgeTitle = document.getElementById('radar-badge-title');
+      const statusDot = document.getElementById('radar-status-dot');
+
+      if (mode === 'weekly') {
+        tabWeekly.className = "px-3 py-1 text-xs font-extrabold rounded-lg bg-rose-500 text-white shadow-sm transition-all";
+        tabRolling.className = "px-3 py-1 text-xs font-extrabold rounded-lg opacity-70 hover:opacity-100 transition-all";
+        viewWeekly.classList.remove('hidden');
+        viewRolling.classList.add('hidden');
+        badgeTitle.innerText = "📅 SIKLUS MINGGUAN TETAP";
+        badgeTitle.className = "text-xs font-black uppercase tracking-wider text-rose-500";
+        statusDot.className = "w-3 h-3 rounded-full bg-rose-500 animate-pulse";
+      } else {
+        tabRolling.className = "px-3 py-1 text-xs font-extrabold rounded-lg bg-amber-500 text-black shadow-sm transition-all font-bold";
+        tabWeekly.className = "px-3 py-1 text-xs font-extrabold rounded-lg opacity-70 hover:opacity-100 transition-all";
+        viewRolling.classList.remove('hidden');
+        viewWeekly.classList.add('hidden');
+        badgeTitle.innerText = "⏳ ROLLING WINDOW (5 JAM)";
+        badgeTitle.className = "text-xs font-black uppercase tracking-wider text-amber-500";
+        statusDot.className = "w-3 h-3 rounded-full bg-amber-500 animate-pulse";
+      }
+      lucide.createIcons();
+    }
+
+    // ANDROID HAPTIC FEEDBACK (RULES.md Rule 8.1)
+    function triggerAndroidHaptics(pattern = [80, 40, 80]) {
+      if ('vibrate' in navigator) {
+        try { navigator.vibrate(pattern); } catch (e) {}
+      }
+    }
+
+    // WEEKLY PANIC DEPLETION (LIMIT HABIS TENGAH PEKAN)
+    function triggerWeeklyPanicDepletion() {
+      weeklyRemainingSeconds = 4 * 86400 + 18 * 3600; // Sisa 4 hari 18 jam
+      const badge = document.getElementById('weekly-status-badge');
+      if (badge) {
+        badge.innerText = "🔴 LIMIT PEKAN INI HABIS (MENUNGGU SENIN)";
+        badge.className = "pill-badge px-2.5 py-0.5 text-[11px] bg-red-500/15 text-red-600 border-red-300 font-bold animate-pulse";
+      }
+      
+      triggerAndroidHaptics([150, 80, 150]);
+      triggerToast("⚠️ Kuota mingguan Antigravity habis! Mengaktifkan Claude Code sebagai cadangan.", "warning");
+      confetti({ particleCount: 50, spread: 70 });
+
+      // Hot-Swap Typewriter recommendation to Claude Code
+      currentRecIndex = 1;
+      startTypewriterLoop();
+    }
+
+    // CLIENT DEMO TIME SIMULATOR
+    function simulateTimeScenario(scenario) {
+      triggerAndroidHaptics([60]);
+      switchRadarMode('weekly');
+
+      if (scenario === 'h12') {
+        weeklyRemainingSeconds = 12 * 3600 + 45;
+        const badge = document.getElementById('weekly-status-badge');
+        if (badge) {
+          badge.innerText = "🟡 RESET IMMINENT (12 JAM LAGI)";
+          badge.className = "pill-badge px-2.5 py-0.5 text-[11px] bg-amber-500/20 text-amber-600 border-amber-300 font-bold animate-pulse";
+        }
+        triggerToast("⚡ [SIMULASI]: Minggu Malam (H-12 Jam sebelum reset Antigravity)", "info");
+      } else if (scenario === 'h5s') {
+        weeklyRemainingSeconds = 5;
+        const badge = document.getElementById('weekly-status-badge');
+        if (badge) {
+          badge.innerText = "🔥 MENGHITUNG MUNDUR (5 DETIK!)";
+          badge.className = "pill-badge px-2.5 py-0.5 text-[11px] bg-rose-500 text-white font-black animate-bounce";
+        }
+        triggerToast("🚀 [SIMULASI]: Detik-detik reset mingguan! Perhatikan layar...", "cute");
+      } else if (scenario === 'panic') {
+        triggerWeeklyPanicDepletion();
+      } else if (scenario === 'normal') {
+        weeklyRemainingSeconds = calculateInitialWeeklySeconds();
+        const badge = document.getElementById('weekly-status-badge');
+        if (badge) {
+          badge.innerText = "🟢 100% SEGAR (SIAP PAKAI)";
+          badge.className = "pill-badge px-2.5 py-0.5 text-[11px] bg-rose-500/15 text-rose-600 border-rose-300 font-bold";
+        }
+        triggerToast("🔄 [WAKTU RIIL]: Dikembalikan ke waktu sinkronisasi nyata", "cute");
+      }
+    }
+
+    // LIVE TICKER LOOP (EACH SECOND)
     setInterval(() => {
+      // 1. ROLLING TIMER (CLAUDE CODE)
       if (remainingSeconds > 0) {
         remainingSeconds--;
         const hrs = Math.floor(remainingSeconds / 3600);
         const mins = Math.floor((remainingSeconds % 3600) / 60);
         const secs = remainingSeconds % 60;
-        document.getElementById('timer-hours').innerText = String(hrs).padStart(2, '0');
-        document.getElementById('timer-minutes').innerText = String(mins).padStart(2, '0');
-        document.getElementById('timer-seconds').innerText = String(secs).padStart(2, '0');
+        const elH = document.getElementById('timer-hours');
+        const elM = document.getElementById('timer-minutes');
+        const elS = document.getElementById('timer-seconds');
+        if (elH) elH.innerText = String(hrs).padStart(2, '0');
+        if (elM) elM.innerText = String(mins).padStart(2, '0');
+        if (elS) elS.innerText = String(secs).padStart(2, '0');
+      }
+
+      // 2. WEEKLY CALENDAR TIMER (ANTIGRAVITY)
+      if (weeklyRemainingSeconds > 0) {
+        weeklyRemainingSeconds--;
+
+        if (weeklyRemainingSeconds === 0) {
+          weeklyRemainingSeconds = 7 * 86400;
+          confetti({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+          triggerAndroidHaptics([100, 50, 100, 50, 200]);
+          simulateMobilePush("🎉 Kuota Mingguan Reset!", "Antigravity pool 100% segar kembali! Siap coding.");
+          triggerToast("🎉 RESET MINGGUAN TERCAPAI! Kuota Antigravity 100% segar!", "cute");
+          const badge = document.getElementById('weekly-status-badge');
+          if (badge) {
+            badge.innerText = "🟢 100% SEGAR (SIAP PAKAI)";
+            badge.className = "pill-badge px-2.5 py-0.5 text-[11px] bg-rose-500/15 text-rose-600 border-rose-300 font-bold";
+          }
+          currentRecIndex = 0;
+          startTypewriterLoop();
+        }
+
+        const days = Math.floor(weeklyRemainingSeconds / 86400);
+        const hrs = Math.floor((weeklyRemainingSeconds % 86400) / 3600);
+        const mins = Math.floor((weeklyRemainingSeconds % 3600) / 60);
+        const secs = weeklyRemainingSeconds % 60;
+
+        const elDays = document.getElementById('weekly-timer-days');
+        const elHrs = document.getElementById('weekly-timer-hours');
+        const elMins = document.getElementById('weekly-timer-minutes');
+        const elSecs = document.getElementById('weekly-timer-seconds');
+        if (elDays) elDays.innerText = String(days).padStart(2, '0');
+        if (elHrs) elHrs.innerText = String(hrs).padStart(2, '0');
+        if (elMins) elMins.innerText = String(mins).padStart(2, '0');
+        if (elSecs) elSecs.innerText = String(secs).padStart(2, '0');
+
+        const totalWeekSec = 7 * 86400;
+        const elapsedSec = totalWeekSec - weeklyRemainingSeconds;
+        const progressPct = Math.min(100, Math.max(0, Math.round((elapsedSec / totalWeekSec) * 100)));
+        const ring = document.getElementById('weekly-progress-ring');
+        if (ring) {
+          const offset = 264 - (progressPct / 100) * 264;
+          ring.style.strokeDashoffset = offset;
+        }
+        const lblPct = document.getElementById('weekly-progress-label');
+        if (lblPct) lblPct.innerText = `${progressPct}% Siklus`;
+
+        const todayName = dayNamesId[new Date().getDay()];
+        const elToday = document.getElementById('weekly-today-name');
+        if (elToday) elToday.innerText = todayName;
       }
     }, 1000);
 
@@ -1666,5 +1933,26 @@
       startTypewriterLoop();
     });
   </script>
+
+  <!-- ANDROID PWA FLOATING THUMB NAVIGATION (RULE 8.1) -->
+  <nav id="android-bottom-nav" class="fixed bottom-3 left-1/2 transform -translate-x-1/2 w-[94%] max-w-md p-2 rounded-2xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border border-current/15 shadow-2xl z-[70] flex items-center justify-around md:hidden">
+    <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-rose-500" id="nav-btn-dashboard">
+      <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+      <span>Dashboard</span>
+    </button>
+    <button onclick="switchTab('accounts')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-accounts">
+      <i data-lucide="cpu" class="w-5 h-5"></i>
+      <span>Armada</span>
+    </button>
+    <button onclick="switchTab('subscriptions')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-subscriptions">
+      <i data-lucide="credit-card" class="w-5 h-5"></i>
+      <span>Langganan</span>
+    </button>
+    <button onclick="openNotificationDrawer()" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100 relative" id="nav-btn-notifs">
+      <i data-lucide="bell" class="w-5 h-5"></i>
+      <span class="absolute top-0 right-3 w-2 h-2 rounded-full bg-rose-500"></span>
+      <span>Notifikasi</span>
+    </button>
+  </nav>
 </body>
 </html>
