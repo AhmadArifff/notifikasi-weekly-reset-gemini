@@ -7,24 +7,25 @@ Aplikasi Next.js 15 App Router & dedicated **Android PWA (Chromium WebAPK / TWA)
 
 ### 📂 Dokumen & Aset Utama Proyek
 
-1. 📄 **[PRD.md](PRD.md)**: *Product Requirements Document v2.0.0* — Arsitektur teknis lengkap, skema PostgreSQL Supabase dengan RLS, 4-tier feature matrix (Minimum, Medium, Maximum, Extraordinary), 6 dimensi behavioral analytics UX, dan Client Pitching Blueprint.
-2. 🛡️ **[RULES.md](RULES.md)**: *Engineering Rules & Anti-AI-Slop Standards* — Standar arsitektur ketat: Zero iOS Rule, Rule 7.1 larangan Playwright, Rule 1.3 anti-CLS typewriter headline, dan Zero-Overlap backdrop drawer.
-3. 🎮 **[prototype.html](prototype.html)**: *Living Interactive HTML Blueprint* — Prototipe HTML mandiri interaktif yang menjadi blueprint hidup aplikasi.
-4. 🏗️ **`src/` & `supabase/`**: Kode produksi Next.js 15 App Router, TypeScript, Tailwind CSS, Three.js 3D Mascot, Zustand state store, dan migration SQL PostgreSQL 16.
+1. 📄 **[PRD.md](PRD.md)**: *Product Requirements Document v2.1.0* — Arsitektur teknis lengkap, skema PostgreSQL Supabase dengan RLS, 4-tier feature matrix, 6 dimensi behavioral analytics UX, dan monorepo workflow.
+2. 🛡️ **[RULES.md](RULES.md)**: *Engineering Rules & Anti-AI-Slop Standards* — Standar arsitektur ketat: Aturan 10 (Monorepo & Policy Gate HTML Blueprint First), Zero iOS Rule, Rule 7.1 larangan Playwright, Rule 1.3 anti-CLS typewriter headline, dan Zero-Overlap backdrop drawer.
+3. 🎨 **[design/prototype.html](design/prototype.html)**: *Living Interactive HTML Blueprint* — Prototipe HTML mandiri interaktif kasar di folder `design/` yang menjadi gerbang evaluasi awal sebelum fitur masuk ke monorepo.
+4. 🏗️ **`apps/web/`**: Aplikasi frontend Next.js 15 App Router, TypeScript, Tailwind CSS, Three.js 3D Mascot, Zustand state store (khusus UI tampilan, backend ditunda).
+5. 🗄️ **`supabase/`**: Migration SQL PostgreSQL 16 DDL untuk persiapan backend di masa mendatang.
 
 ---
 
-### 🚀 Cara Menjalankan Aplikasi (Next.js 15)
+### 🚀 Cara Menjalankan Aplikasi (Monorepo Workspace)
 
 ```bash
-# 1. Install dependensi
+# 1. Install dependensi monorepo
 npm install
 
-# 2. Jalankan development server
+# 2. Jalankan development server tampilan web (apps/web)
 npm run dev
 # Buka http://localhost:3000 di browser
 
-# 3. Build produksi
+# 3. Build produksi frontend tampilan
 npm run build
 npm run start
 ```

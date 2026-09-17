@@ -9,7 +9,7 @@
 | **Applicable Project** | **ChronosAI** (PWA Multi-Agent Reset & Subscription Watcher) |
 | **Target Audience** | All AI Agents (Router, Backend, Frontend, UI/UX, 3D, QA, Security, Critic) & Human Engineers |
 | **Enforcement Level** | **STRICT / ZERO TOLERANCE** (Violations block PR & Deployment) |
-| **Living Blueprint Contract** | [prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/prototype.html) |
+| **Living Blueprint Contract** | [design/prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/design/prototype.html) |
 | **Companion Specification** | [PRD.md](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/PRD.md) |
 
 ---
@@ -143,4 +143,24 @@ Sebelum kode dinyatakan **DONE**:
   5. *Android PWA Retention & Dismissal*: Rasio interaksi vs *swipe-away* pada push notification HP.
   6. *Perceived Latency (CLS = 0)*: Kepastian nol pergeseran antarmuka saat typewriter atau data dimuat.
 * **Privacy-First Telemetry**: Seluruh pencatatan event perilaku bersifat teragregasi secara anonim tanpa menyimpan data kredensial, token API, atau identitas pribadi pengguna (*Zero PII*).
+
+---
+
+## 10. Kebijakan Struktur Monorepo & Gate "HTML Blueprint Kasar Dahulu"
+
+### 📦 Aturan 10.1: Struktur Monorepo Terstruktur (UI Only, Backend Nanti)
+* **Pemisahan Folder Monorepo**:
+  * `design/`: Folder blueprint dan purwarupa HTML kasar interaktif mandiri ([`design/prototype.html`](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/design/prototype.html)).
+  * `apps/web`: Aplikasi frontend Next.js 15 PWA berbasis TypeScript dan Tailwind CSS (khusus antarmuka tampilan).
+  * `packages/`: Komponen/tipe shared jika dibutuhkan di masa mendatang.
+  * `backend`: **DITUNDA SEPENUHNYA (PENDING)**. DILARANG membuat atau mengembangkan backend sebelum ada instruksi eksplisit dari pengguna.
+* **Root Workspace Control**: Seluruh perintah eksekusi dari root dikelola melalui npm workspaces (`npm run dev --workspace=apps/web`).
+
+### 🛑 Aturan 10.2: Policy Gate "Tampilan Kasar HTML Dahulu" (Human-in-the-Loop Confirmation)
+* **DILARANG LANGSUNG CODING KE MONOREPO**: Seluruh agen AI **DILARANG KERAS** langsung melakukan implementasi kode atau perubahan ke dalam project monorepo (`apps/web`) sebelum mendapatkan konfirmasi eksplisit dari pengguna.
+* **WORKFLOW MUTLAK SETIAP FITUR / PERANCANGAN BARU**:
+  1. **Langkah 1 (Tampilan Kasar HTML)**: Setiap ada ide, perancangan, atau penambahan fitur baru, AI **WAJIB** membangun dan memvisualisasikannya ke dalam berkas tampilan kasar HTML ([`design/prototype.html`](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/design/prototype.html)) terlebih dahulu.
+  2. **Langkah 2 (Testing & Review Pengguna)**: Pengguna akan membuka berkas HTML kasar tersebut di browser untuk memeriksa alur (*flow*), interaktivitas tombol, tata letak, dan kecocokan desain.
+  3. **Langkah 3 (Menunggu Konfirmasi Resmi)**: AI **WAJIB BERHENTI** dan menanyakan persetujuan kepada pengguna.
+  4. **Langkah 4 (Baru Boleh ke Monorepo)**: HANYA SETELAH pengguna memberikan konfirmasi resmi (misalnya: *"saya konfirmasi mulai project monorepo"*), agen Builder baru diizinkan mentransfer atau mengimplementasikan kode tersebut ke dalam `apps/web`.
 

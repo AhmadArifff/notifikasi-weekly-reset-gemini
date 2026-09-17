@@ -7,16 +7,17 @@
 | Document Metadata | Detail |
 | :--- | :--- |
 | **Project Name** | **ChronosAI** (Weekly & Rolling AI Reset & Subscription Watcher) |
-| **Document Version** | `v2.0.0` (Android PWA Dedicated, 4-Tier Feature Maturity Matrix, Behavioral UX Analytics & Client Pitching) |
+| **Document Version** | `v2.1.0` (Monorepo Architecture, HTML Blueprint First Policy Gate, UI-Only Scope) |
 | **Author** | Senior Product Manager, Genjutsu Design Architect & Enterprise System Engineer |
-| **Status** | Approved for Development & Production Blueprint |
+| **Status** | Approved for Monorepo Structure & Living Design Blueprint |
+| **Monorepo Structure** | 📦 Root (`package.json` workspaces), 🎨 `design/` (HTML Blueprint), 💻 `apps/web` (Next.js 15 UI Only) |
 | **Target Platforms** | 📱 **Android Only** (PWA / WebAPK / TWA via Chromium) & 💻 **Desktop/Laptop Web** *(iOS is strictly excluded)* |
-| **Tech Stack Foundation** | Next.js 15+ (App Router) / React 19 / TypeScript (Strict) / Tailwind CSS |
-| **Living Prototype Contract** | [prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/prototype.html) |
+| **Tech Stack Foundation** | Monorepo / Next.js 15+ (App Router) / React 19 / TypeScript (Strict) / Tailwind CSS |
+| **Living Prototype Contract** | [design/prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/design/prototype.html) |
 | **Design Engines Applied** | Genjutsu (`@paint`, `@cast`), Magic UI, Three.js 3D, Motion (Disney Principles) |
 | **Themes Supported** | 1. 🎀 Kawaii Dream (Feminine Pastel) \| 2. 💀 Cyber-Virus Matrix \| 3. 💎 Obsidian Pro High-Tech |
 | **Notification Architecture** | 📱 **Android**: Native Web Push (VAPID) + Haptic Feedback (`navigator.vibrate`) <br> 💻 **Desktop/Laptop**: In-App Slide-Over Drawer (Read/Unread Toggle) |
-| **Hosting & Deployment** | Vercel (Edge Network) + Supabase (PostgreSQL 16, Auth, Realtime, Edge Functions) |
+| **Backend Scope** | ⏸️ **DITUNDA (Pending User Confirmation)** — Fokus monorepo saat ini 100% pada tampilan antarmuka (UI). |
 
 ---
 
@@ -43,9 +44,15 @@ Pembaruan arsitektur v1.5.0 menyelesaikan kendala antarmuka dan interaksi riil:
 
 ---
 
-## 2. Living Interactive Prototype Blueprint (`prototype.html`)
+## 2. Living Interactive Prototype Blueprint (`design/prototype.html`) & Monorepo Workflow
 
-Berkas **[prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/prototype.html)** adalah acuan wajib (*Single Source of Truth*) yang menyajikan alur semi-final aplikasi:
+Berkas **[design/prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/design/prototype.html)** adalah acuan wajib (*Single Source of Truth*) yang menyajikan alur semi-final aplikasi dan bertindak sebagai **gerbang utama (Policy Gate)**:
+* **HTML Blueprint First Policy**: Setiap ide baru, fitur tambahan, atau revisi alur antarmuka **WAJIB** diimplementasikan terlebih dahulu pada berkas tampilan kasar HTML ini sebelum disentuh ke dalam basis kode monorepo.
+* **Human-in-the-Loop Confirmation**: AI **DILARANG** memindahkan/mengimplementasikan kode ke project monorepo (`apps/web`) sebelum pengguna mereview dan memberikan persetujuan eksplisit.
+* **Struktur Monorepo Terisolasi**:
+  * `design/`: Ruang eksplorasi dan purwarupa HTML kasar tanpa dependensi rumit.
+  * `apps/web`: Implementasi tampilan Next.js 15 PWA berbasis TypeScript dan Tailwind CSS (khusus UI, tanpa backend).
+  * `backend`: Ditunda pengerjaannya sampai instruksi eksplisit berikutnya.
 * Pusat notifikasi laptop berupa Slide-Over Drawer dengan backdrop yang bersih dan bebas tumpang tindih.
 * Headline rekomendasi armada mengetik sendiri secara dinamis dengan kursor aktif (*typewriter animation engine*).
 * Form edit dan tambah akun yang berfungsi secara reaktif (*CRUD in-memory state*).
