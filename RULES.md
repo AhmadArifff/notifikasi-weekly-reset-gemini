@@ -116,3 +116,31 @@ Sebelum kode dinyatakan **DONE**:
   * Lakukan verifikasi berbasis pembacaan kode statis (*static inspection / code review*).
   * Uji logika menggunakan script / command shell lokal yang ringan.
   * Berikan instruksi kepada pengguna untuk merefresh dan mencoba antarmuka langsung di browser pengguna.
+
+---
+
+## 8. Kebijakan Platform: Android PWA & Desktop Only (Zero iOS Policy)
+
+### 🚫 Aturan 8.1: Larangan Kompromi Arsitektur iOS (Zero iOS Rule)
+* **DILARANG MENGALOKASIKAN RESOURCES UNTUK EKOSISTEM IOS**: Seluruh agen AI **DILARANG** menambahkan polyfill Safari WebKit, workaround Apple APNs, atau konfigurasi khusus iOS yang memperumit basis kode.
+* **FOKUS 100% ANDROID PWA & DESKTOP WEB**:
+  * **Android WebAPK Engine**: PWA dioptimalkan untuk instalasi native di sistem operasi Android (Chromium engine) dengan manifest adaptive icon dan theme color dinamis.
+  * **Android Vibration / Haptic API**: Ketika limit kuota terpicu atau alert H-7 diterima, wajib memanggil `navigator.vibrate([100, 50, 100])` untuk memberikan konfirmasi sensorik nyata pada smartphone Android.
+  * **Android Back Button Lifecycle**: Event `popstate` atau gestur back swipe Android **WAJIB** menutup dialog, drawer, atau bottom sheet yang sedang terbuka terlebih dahulu sebelum menutup atau berpindah halaman.
+  * **Thumb-Zone Navigation**: Tampilan mobile Android wajib menempatkan navigasi utama di bagian bawah layar (*Floating Bottom Bar*) agar mudah dijangkau ibu jari pengguna.
+  * **App Badging API**: Sinkronkan jumlah notifikasi unread dengan icon badge Android via `navigator.setAppBadge(count)`.
+
+---
+
+## 9. Standar Analisa Perilaku Pengguna & Telemetri UX (Behavioral UX Ethics)
+
+### 📊 Aturan 9.1: Pengukuran 6 Dimensi UX Tanpa Pelanggaran Privasi
+* Sistem analitik perilaku pengguna wajib melacak 6 indikator utama:
+  1. *Panic Depletion Frequency*: Jam-jam kritis developer kehabisan kuota (14:00 - 17:00 WIB).
+  2. *Hot-Swap Latency*: Waktu reaksi beralih dari akun limit ke akun rekomendasi (< 3 detik target).
+  3. *Theme Dwell Time*: Durasi penggunaan per tema untuk mendeteksi kelelahan visual (*eye strain*).
+  4. *Subscription Cliff Reaction*: Tingkat kesadaran pengguna terhadap peringatan jatuh tempo H-7/H-3.
+  5. *Android PWA Retention & Dismissal*: Rasio interaksi vs *swipe-away* pada push notification HP.
+  6. *Perceived Latency (CLS = 0)*: Kepastian nol pergeseran antarmuka saat typewriter atau data dimuat.
+* **Privacy-First Telemetry**: Seluruh pencatatan event perilaku bersifat teragregasi secara anonim tanpa menyimpan data kredensial, token API, atau identitas pribadi pengguna (*Zero PII*).
+
