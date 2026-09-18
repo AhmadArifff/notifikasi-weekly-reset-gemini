@@ -7,14 +7,14 @@
 | Document Metadata | Detail |
 | :--- | :--- |
 | **Project Name** | **ChronosAI** (Weekly & Rolling AI Reset & Subscription Watcher) |
-| **Document Version** | `v2.1.0` (Monorepo Architecture, HTML Blueprint First Policy Gate, UI-Only Scope) |
+| **Document Version** | `v2.2.0` (Theme-Adaptive Iconography Engine & Polymorphic 3D Generative Canvas) |
 | **Author** | Senior Product Manager, Genjutsu Design Architect & Enterprise System Engineer |
-| **Status** | Approved for Monorepo Structure & Living Design Blueprint |
+| **Status** | Approved for Monorepo Structure, Adaptive Iconography & Living Design Blueprint |
 | **Monorepo Structure** | 📦 Root (`package.json` workspaces), 🎨 `design/` (HTML Blueprint), 💻 `apps/web` (Next.js 15 UI Only) |
 | **Target Platforms** | 📱 **Android Only** (PWA / WebAPK / TWA via Chromium) & 💻 **Desktop/Laptop Web** *(iOS is strictly excluded)* |
 | **Tech Stack Foundation** | Monorepo / Next.js 15+ (App Router) / React 19 / TypeScript (Strict) / Tailwind CSS |
 | **Living Prototype Contract** | [design/prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/improving/notifikasi-weekly-reset-gemini/design/prototype.html) |
-| **Design Engines Applied** | Genjutsu (`@paint`, `@cast`), Magic UI, Three.js 3D, Motion (Disney Principles) |
+| **Design Engines Applied** | Genjutsu (`@paint`, `@cast`), Dynamic Icon Matrix, Three.js Polymorphic 3D, Motion |
 | **Themes Supported** | 1. 🎀 Kawaii Dream (Feminine Pastel) \| 2. 💀 Cyber-Virus Matrix \| 3. 💎 Obsidian Pro High-Tech |
 | **Notification Architecture** | 📱 **Android**: Native Web Push (VAPID) + Haptic Feedback (`navigator.vibrate`) <br> 💻 **Desktop/Laptop**: In-App Slide-Over Drawer (Read/Unread Toggle) |
 | **Backend Scope** | ⏸️ **DITUNDA (Pending User Confirmation)** — Fokus monorepo saat ini 100% pada tampilan antarmuka (UI). |
@@ -105,6 +105,29 @@ Berkas **[design/prototype.html](file:///c:/Users/ASUS/Documents/Web%20Dev/impro
 * **Android Back Button Lifecycle**: Tombol back fisik/gesture Android menutup modal/drawer aktif terlebih dahulu sebelum memicu navigasi mundur halaman.
 * **App Badging API**: Menampilkan angka counter notifikasi belum dibaca langsung di atas ikon aplikasi di launcher Android (`navigator.setAppBadge`).
 * 🚫 **Zero iOS Policy**: Tidak menyediakan kompromi arsitektural untuk iOS Safari/WebKit (menghilangkan friksi sertifikat Apple Developer, restriksi PWA background sync iOS, dan limitasi audio context).
+
+### 3.9 EPIC 9: Theme-Adaptive Dynamic Iconography Engine (DNA-Tailored Icons)
+* **Eliminasi Ikon Statis**: Ikon antarmuka tidak boleh kaku atau seragam saat tema berubah. Setiap tema memiliki kepribadian visual (*design DNA*) unik:
+  * **🎀 Kawaii Pastel Dream (`cute`)**: Ikon playful, lembut, dan bersahabat (`sparkles` untuk dashboard, `heart-handshake` untuk armada, `gift` untuk langganan, `star` untuk telemetri UX, `smile` untuk pengaturan/notifikasi, `zap` untuk trigger kuota).
+  * **💀 Cyber-Virus Matrix (`hacker`)**: Ikon terminal hacker, komputasi brutal, dan cyber-threat (`terminal` / `crosshair` untuk dashboard, `cpu` / `binary` untuk armada, `shield-alert` / `file-code` untuk langganan, `radio` / `scan` untuk telemetri, `flame` / `skull` untuk depletion trigger).
+  * **💎 Obsidian Pro High-Tech (`obsidian`)**: Ikon presisi kristal, geometris, dan kemewahan eksekutif (`activity` / `orbit` untuk dashboard, `layers` / `boxes` untuk armada, `credit-card` / `wallet` untuk langganan, `bar-chart-3` / `gauge` untuk analitik, `gem` / `sliders-horizontal` untuk pengaturan).
+* **Dynamic Swap Engine**: Atribut `data-icon-key` pada elemen HTML ditukar secara reaktif ke nama ikon tema aktif, lalu di-render ulang via `lucide.createIcons()` seketika tanpa pergeseran layout (CLS = 0).
+
+### 3.10 EPIC 10: Polymorphic 3D Generative Canvas & Antigravity Cyber Engine
+* **Eliminasi Model 3D Donat Seragam**: Dilarang menggunakan satu geometri seragam (`TorusGeometry`) yang hanya bertukar warna. Tiga tema wajib memiliki model 3D prosedural Three.js dengan geometri, struktur mesh, material shader, dan kinetik pergerakan yang sepenuhnya mandiri:
+  1. **Kawaii Model: Chrono-Star Mascot**:
+     * Karakter Bintang Magis 3D dengan mata bundar mengilap berekspresi (`SphereGeometry` hitam pekat dengan titik pantul putih) dan pipi merona pastel.
+     * Material: `MeshStandardMaterial` soft pink pastel (`#ff6b8b`), roughness 0.2, metalness 0.1.
+     * Animasi: Melayang membal elastis (*bouncy sine wave floating*), berputar ceria, dan merespons interaksi mouse/drag seperti boneka hidup.
+  2. **Cyber-Virus Model: Antigravity Virus Spike Core (Hack Mode)**:
+     * Inti virus poligon berduri tajam (*Spiky Polyhedral Core* menggunakan Icosahedron berujung runcing / dual intersecting octahedrons) dengan dua cincin orbital neon tipis (*dual orbital rings*) berputar cepat miring berlawanan arah dan awan partikel digital hijau fosfor (`THREE.Points`).
+     * Material: Wireframe neon hijau fosfor (`#00ff41`) dengan intensitas emisi tinggi.
+     * Animasi: Rotasi cepat agresif, micro-glitch twitch acak (getaran sesaat), dan efek denyut jantung rogue AI.
+  3. **Obsidian Pro Model: Prism Chrono-Crystal Gyroscope**:
+     * Kristal polihedral facet tajam presisi (*facet octahedron/dodecahedron prism*) yang melayang di tengah dua cincin gyro gimbal antigravitasi logam gelap titanium yang berotasi pada sumbu X dan Y secara terpisah.
+     * Material: `MeshPhysicalMaterial` / `MeshStandardMaterial` obsidian zamrud gelap (`#064e3b`), metalness 0.95, roughness 0.05, memantulkan spekular cahaya tajam berkelas enterprise.
+     * Animasi: Rotasi kinetik orbital presisi, halus, elegan, dan stabil.
+
 
 ---
 

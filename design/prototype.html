@@ -329,7 +329,7 @@
         
         <!-- IN-APP NOTIFICATION BELL (TRIGGERS ZERO-OVERLAP DRAWER) -->
         <button onclick="openNotificationDrawer()" class="squishy-btn relative p-2.5 rounded-2xl bg-black/5 dark:bg-black/40 border border-current/15 hover:bg-black/10 flex items-center justify-center text-current cursor-pointer" title="Buka Pusat Notifikasi Laptop">
-          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span data-icon-key="notifs" data-icon-class="w-5 h-5"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>
           <span id="unread-badge" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center shadow-md animate-pulse">2</span>
         </button>
 
@@ -351,19 +351,19 @@
     <!-- NAVIGATION BAR -->
     <nav class="flex items-center gap-2.5 overflow-x-auto pb-1">
       <button onclick="switchTab('dashboard')" id="nav-dashboard" class="squishy-btn px-5 py-2.5 text-xs font-extrabold flex items-center gap-2 bg-rose-500 text-white shadow-lg shadow-rose-500/25">
-        <i data-lucide="sparkles" class="w-4 h-4"></i> Dashboard Radar
+        <span data-icon-key="dashboard" data-icon-class="w-4 h-4"><i data-lucide="sparkles" class="w-4 h-4"></i></span> Dashboard Radar
       </button>
       <button onclick="switchTab('accounts')" id="nav-accounts" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
-        <i data-lucide="bot" class="w-4 h-4"></i> Armada Akun (<span id="fleet-count">5</span>)
+        <span data-icon-key="accounts" data-icon-class="w-4 h-4"><i data-lucide="heart-handshake" class="w-4 h-4"></i></span> Armada Akun (<span id="fleet-count">5</span>)
       </button>
       <button onclick="switchTab('subscriptions')" id="nav-subscriptions" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
-        <i data-lucide="credit-card" class="w-4 h-4"></i> Langganan & Biaya (<span class="text-rose-500 font-extrabold">H-7 Aktif</span>)
+        <span data-icon-key="subscriptions" data-icon-class="w-4 h-4"><i data-lucide="gift" class="w-4 h-4"></i></span> Langganan & Biaya (<span class="text-rose-500 font-extrabold">H-7 Aktif</span>)
       </button>
       <button onclick="switchTab('analytics')" id="nav-analytics" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
-        <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Telemetri UX (6 Dimensi)
+        <span data-icon-key="analytics" data-icon-class="w-4 h-4"><i data-lucide="star" class="w-4 h-4"></i></span> Telemetri UX (6 Dimensi)
       </button>
       <button onclick="switchTab('settings')" id="nav-settings" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
-        <i data-lucide="smartphone" class="w-4 h-4"></i> Push HP & Cadangan
+        <span data-icon-key="settings" data-icon-class="w-4 h-4"><i data-lucide="smile" class="w-4 h-4"></i></span> Push HP & Cadangan
       </button>
     </nav>
 
@@ -461,7 +461,7 @@
         <div class="theme-card p-5 md:col-span-1 flex flex-col items-center justify-between min-h-[320px]">
           <div class="w-full flex items-center justify-between">
             <span class="text-xs font-extrabold uppercase tracking-wider flex items-center gap-1.5" id="mascot-box-title">
-              <i data-lucide="heart" class="w-4 h-4 text-rose-500"></i> 3D Kawaii Mascot
+              <span data-icon-key="mascotBox" data-icon-class="w-4 h-4"><i data-lucide="sparkles" class="w-4 h-4 text-rose-500"></i></span> <span id="mascot-title-text">3D Kawaii Star Mascot</span>
             </span>
             <span class="pill-badge px-2 py-0.5 text-[10px]" id="mascot-status-pill">Happy Pulse</span>
           </div>
@@ -469,7 +469,7 @@
           <div id="three-container" class="w-full h-52 flex items-center justify-center cursor-grab active:cursor-grabbing"></div>
 
           <div class="text-center w-full">
-            <p class="text-[11px] opacity-75 font-medium">Putar maskot lucu dengan kursor / jari Anda!</p>
+            <p class="text-[11px] opacity-75 font-medium" id="mascot-caption-text">Putar maskot bintang lucu dengan kursor / jari Anda!</p>
           </div>
         </div>
 
@@ -555,7 +555,7 @@
                 <span>Antigravity pool reset otomatis setiap Senin pukul 14:00 WIB</span>
               </div>
               <button onclick="triggerWeeklyPanicDepletion()" class="squishy-btn px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center gap-2 shadow-md">
-                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                <span data-icon-key="panicLimit" data-icon-class="w-4 h-4"><i data-lucide="heart-crack" class="w-4 h-4"></i></span>
                 <span>Limit Mingguan Habis! (Hot-Swap Cadangan)</span>
               </button>
             </div>
@@ -601,7 +601,7 @@
                 <span>Baru saja terkena limit token lagi?</span>
               </div>
               <button onclick="triggerQuickDepletion()" class="squishy-btn px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-black flex items-center gap-2 shadow-lg shadow-rose-500/30">
-                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <span data-icon-key="rollingLimit" data-icon-class="w-4 h-4"><i data-lucide="zap" class="w-4 h-4"></i></span>
                 <span>Limit Kena Sekarang! (Mulai Ulang 5 Jam)</span>
               </button>
             </div>
@@ -1856,7 +1856,59 @@
       event.target.value = "";
     }
 
-    // 13. THEME ENGINE CONTROLLER
+    // 13. THEME ENGINE & THEME-ADAPTIVE DYNAMIC ICONOGRAPHY (RULE 12.1 & PRD EPIC 9)
+    const themeIcons = {
+      cute: {
+        dashboard: 'sparkles',
+        accounts: 'heart-handshake',
+        subscriptions: 'gift',
+        analytics: 'star',
+        settings: 'smile',
+        notifs: 'bell-ring',
+        panicLimit: 'heart-crack',
+        rollingLimit: 'zap',
+        addAccount: 'plus-circle',
+        mascotBox: 'sparkles'
+      },
+      hacker: {
+        dashboard: 'crosshair',
+        accounts: 'cpu',
+        subscriptions: 'shield-alert',
+        analytics: 'radio',
+        settings: 'zap',
+        notifs: 'alert-triangle',
+        panicLimit: 'skull',
+        rollingLimit: 'flame',
+        addAccount: 'code-2',
+        mascotBox: 'terminal'
+      },
+      obsidian: {
+        dashboard: 'activity',
+        accounts: 'layers',
+        subscriptions: 'credit-card',
+        analytics: 'bar-chart-3',
+        settings: 'sliders-horizontal',
+        notifs: 'bell',
+        panicLimit: 'shield-alert',
+        rollingLimit: 'refresh-cw',
+        addAccount: 'plus',
+        mascotBox: 'gem'
+      }
+    };
+
+    function updateThemeIcons(theme) {
+      const mapping = themeIcons[theme] || themeIcons.cute;
+      document.querySelectorAll('[data-icon-key]').forEach(el => {
+        const key = el.getAttribute('data-icon-key');
+        const iconName = mapping[key];
+        if (iconName) {
+          const sizeClass = el.getAttribute('data-icon-class') || 'w-4 h-4';
+          el.innerHTML = `<i data-lucide="${iconName}" class="${sizeClass}"></i>`;
+        }
+      });
+      lucide.createIcons();
+    }
+
     function switchTheme(theme) {
       currentTheme = theme;
       document.documentElement.setAttribute('data-theme', theme);
@@ -1898,7 +1950,7 @@
         triggerToast("💎 Tema: Obsidian Pro High-Tech", "obsidian");
       }
       startTypewriterLoop();
-      lucide.createIcons();
+      updateThemeIcons(theme);
     }
 
     // 14. MATRIX RAIN
@@ -2109,8 +2161,239 @@
       }
     }, 1000);
 
-    // 16. THREE.JS 3D MASCOT
-    let scene, camera, renderer, mascotMesh;
+    // 16. THREE.JS POLYMORPHIC 3D GENERATIVE CANVAS (RULE 12.2 & PRD EPIC 10)
+    let scene, camera, renderer, threePointLight;
+    let cuteGroup, hackerGroup, obsidianGroup;
+    let activeModelGroup = null;
+    let activeTheme3D = 'cute';
+
+    function buildCuteStarModel() {
+      const group = new THREE.Group();
+
+      // 1. 3D Beveled 5-Pointed Star
+      const starShape = new THREE.Shape();
+      const points = 5;
+      const outerR = 0.85;
+      const innerR = 0.44;
+      for (let i = 0; i < points * 2; i++) {
+        const r = (i % 2 === 0) ? outerR : innerR;
+        const angle = (i * Math.PI) / points - Math.PI / 2;
+        const x = Math.cos(angle) * r;
+        const y = Math.sin(angle) * r;
+        if (i === 0) starShape.moveTo(x, y);
+        else starShape.lineTo(x, y);
+      }
+      starShape.closePath();
+
+      const extrudeSettings = {
+        depth: 0.28,
+        bevelEnabled: true,
+        bevelSegments: 4,
+        steps: 1,
+        bevelSize: 0.08,
+        bevelThickness: 0.08
+      };
+      const starGeo = new THREE.ExtrudeGeometry(starShape, extrudeSettings);
+      starGeo.center();
+
+      const starMat = new THREE.MeshStandardMaterial({
+        color: 0xff6584,
+        roughness: 0.25,
+        metalness: 0.15,
+        emissive: 0xff3366,
+        emissiveIntensity: 0.15
+      });
+      const starMesh = new THREE.Mesh(starGeo, starMat);
+      group.add(starMesh);
+
+      // 2. Eyes (Kawaii Shiny Black Spheres)
+      const eyeGeo = new THREE.SphereGeometry(0.08, 16, 16);
+      const eyeMat = new THREE.MeshBasicMaterial({ color: 0x111111 });
+
+      const eyeLeft = new THREE.Mesh(eyeGeo, eyeMat);
+      eyeLeft.position.set(-0.16, 0.06, 0.22);
+      group.add(eyeLeft);
+
+      const eyeRight = new THREE.Mesh(eyeGeo, eyeMat);
+      eyeRight.position.set(0.16, 0.06, 0.22);
+      group.add(eyeRight);
+
+      // 3. Eye Highlights (Anime Sparkles)
+      const sparkleGeo = new THREE.SphereGeometry(0.026, 8, 8);
+      const sparkleMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+      const spLeft = new THREE.Mesh(sparkleGeo, sparkleMat);
+      spLeft.position.set(-0.14, 0.09, 0.28);
+      group.add(spLeft);
+
+      const spRight = new THREE.Mesh(sparkleGeo, sparkleMat);
+      spRight.position.set(0.18, 0.09, 0.28);
+      group.add(spRight);
+
+      // 4. Rosy Blush Disks
+      const blushGeo = new THREE.CircleGeometry(0.06, 16);
+      const blushMat = new THREE.MeshBasicMaterial({ color: 0xff94b0, side: THREE.DoubleSide });
+
+      const blushLeft = new THREE.Mesh(blushGeo, blushMat);
+      blushLeft.position.set(-0.28, -0.06, 0.22);
+      group.add(blushLeft);
+
+      const blushRight = new THREE.Mesh(blushGeo, blushMat);
+      blushRight.position.set(0.28, -0.06, 0.22);
+      group.add(blushRight);
+
+      // 5. Orbiting Mini Floating Golden Star Particles
+      const miniStarGroup = new THREE.Group();
+      const miniStarGeo = new THREE.TetrahedronGeometry(0.09);
+      const miniStarMat = new THREE.MeshStandardMaterial({
+        color: 0xffd166,
+        emissive: 0xffb703,
+        emissiveIntensity: 0.6
+      });
+      for (let i = 0; i < 3; i++) {
+        const mini = new THREE.Mesh(miniStarGeo, miniStarMat);
+        const theta = (i * Math.PI * 2) / 3;
+        mini.position.set(Math.cos(theta) * 1.3, Math.sin(theta) * 0.5, Math.sin(theta) * 0.8);
+        miniStarGroup.add(mini);
+      }
+      group.add(miniStarGroup);
+      group.userData = { starMesh, miniStarGroup };
+
+      return group;
+    }
+
+    function buildHackerVirusModel() {
+      const group = new THREE.Group();
+
+      // 1. Spiky Wireframe Icosahedron Core
+      const coreGeo = new THREE.IcosahedronGeometry(0.55, 1);
+      const coreMat = new THREE.MeshStandardMaterial({
+        color: 0x00ff41,
+        wireframe: true,
+        emissive: 0x00ff41,
+        emissiveIntensity: 0.4
+      });
+      const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+      group.add(coreMesh);
+
+      // Inner solid dark rogue sphere
+      const innerGeo = new THREE.SphereGeometry(0.35, 16, 16);
+      const innerMat = new THREE.MeshBasicMaterial({ color: 0x031405 });
+      const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+      group.add(innerMesh);
+
+      // Radial Virus Spikes
+      const spikeGroup = new THREE.Group();
+      const spikeGeo = new THREE.ConeGeometry(0.07, 0.42, 4);
+      const spikeMat = new THREE.MeshStandardMaterial({
+        color: 0x00ff41,
+        wireframe: true,
+        emissive: 0x00ff41,
+        emissiveIntensity: 0.3
+      });
+      const spikeDirs = [
+        [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1],
+        [0.7, 0.7, 0], [-0.7, -0.7, 0], [0.7, 0, 0.7], [-0.7, 0, -0.7]
+      ];
+      spikeDirs.forEach(dir => {
+        const spike = new THREE.Mesh(spikeGeo, spikeMat);
+        const vec = new THREE.Vector3(dir[0], dir[1], dir[2]).normalize();
+        spike.position.copy(vec.clone().multiplyScalar(0.65));
+        spike.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vec);
+        spikeGroup.add(spike);
+      });
+      group.add(spikeGroup);
+
+      // 2. Dual Glitching Orbital Rings
+      const ringGeo1 = new THREE.TorusGeometry(1.08, 0.02, 16, 64);
+      const ringMat1 = new THREE.MeshBasicMaterial({ color: 0x00ff41 });
+      const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
+      ring1.rotation.x = Math.PI / 3;
+      group.add(ring1);
+
+      const ringGeo2 = new THREE.TorusGeometry(1.28, 0.015, 16, 64);
+      const ringMat2 = new THREE.MeshBasicMaterial({ color: 0x39ff14 });
+      const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
+      ring2.rotation.y = Math.PI / 4;
+      ring2.rotation.x = -Math.PI / 5;
+      group.add(ring2);
+
+      // 3. Matrix Digital Swarm (Points)
+      const particleCount = 75;
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        const r = 1.35 + Math.random() * 0.45;
+        positions[i] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i + 2] = r * Math.cos(phi);
+      }
+      const pointsGeo = new THREE.BufferGeometry();
+      pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const pointsMat = new THREE.PointsMaterial({
+        color: 0x00ff41,
+        size: 0.045,
+        transparent: true,
+        opacity: 0.85
+      });
+      const pointSwarm = new THREE.Points(pointsGeo, pointsMat);
+      group.add(pointSwarm);
+
+      group.userData = { coreMesh, spikeGroup, ring1, ring2, pointSwarm };
+      return group;
+    }
+
+    function buildObsidianCrystalModel() {
+      const group = new THREE.Group();
+
+      // 1. Faceted Elongated Prism Octahedron
+      const prismGeo = new THREE.OctahedronGeometry(0.72, 0);
+      prismGeo.scale(0.85, 1.35, 0.85);
+
+      const prismMat = new THREE.MeshStandardMaterial({
+        color: 0x064e3b,
+        roughness: 0.08,
+        metalness: 0.92,
+        emissive: 0x10b981,
+        emissiveIntensity: 0.28
+      });
+      const crystalMesh = new THREE.Mesh(prismGeo, prismMat);
+      group.add(crystalMesh);
+
+      // 2. Dual Titanium Gyroscope Gimbal Rings
+      const gyroGeo1 = new THREE.TorusGeometry(1.08, 0.04, 16, 72);
+      const gyroMat1 = new THREE.MeshStandardMaterial({
+        color: 0x1e293b,
+        roughness: 0.2,
+        metalness: 0.95
+      });
+      const gyroRing1 = new THREE.Mesh(gyroGeo1, gyroMat1);
+      group.add(gyroRing1);
+
+      const gyroGeo2 = new THREE.TorusGeometry(1.36, 0.035, 16, 72);
+      const gyroMat2 = new THREE.MeshStandardMaterial({
+        color: 0x0f172a,
+        roughness: 0.15,
+        metalness: 0.95
+      });
+      const gyroRing2 = new THREE.Mesh(gyroGeo2, gyroMat2);
+      gyroRing2.rotation.x = Math.PI / 2;
+      group.add(gyroRing2);
+
+      // 3. Central Emerald Quantum Core Ring
+      const quantumGeo = new THREE.TorusGeometry(0.48, 0.015, 16, 48);
+      const quantumMat = new THREE.MeshBasicMaterial({ color: 0x34d399 });
+      const quantumRing = new THREE.Mesh(quantumGeo, quantumMat);
+      quantumRing.rotation.x = Math.PI / 2;
+      group.add(quantumRing);
+
+      group.userData = { crystalMesh, gyroRing1, gyroRing2, quantumRing };
+      return group;
+    }
+
     function initThreeMascot() {
       const container = document.getElementById('three-container');
       const width = container.clientWidth || 240;
@@ -2118,58 +2401,138 @@
 
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-      camera.position.z = 3.5;
+      camera.position.z = 3.6;
 
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(width, height);
       renderer.setPixelRatio(window.devicePixelRatio);
       container.appendChild(renderer.domElement);
 
-      const light = new THREE.AmbientLight(0xffffff, 0.9);
-      scene.add(light);
-      const point = new THREE.PointLight(0xf43f5e, 2, 50);
-      point.position.set(4, 4, 4);
-      scene.add(point);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambientLight);
 
-      const geometry = new THREE.TorusGeometry(0.8, 0.35, 16, 100);
-      const material = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2, metalness: 0.1 });
-      mascotMesh = new THREE.Mesh(geometry, material);
-      scene.add(mascotMesh);
+      threePointLight = new THREE.PointLight(0xf43f5e, 2, 50);
+      threePointLight.position.set(4, 4, 4);
+      scene.add(threePointLight);
+
+      // Build 3 distinct procedural models
+      cuteGroup = buildCuteStarModel();
+      hackerGroup = buildHackerVirusModel();
+      obsidianGroup = buildObsidianCrystalModel();
+
+      // Default active model: Cute
+      activeModelGroup = cuteGroup;
+      scene.add(activeModelGroup);
 
       let clock = new THREE.Clock();
       function animate() {
         requestAnimationFrame(animate);
         const t = clock.getElapsedTime();
-        mascotMesh.rotation.x = Math.sin(t * 1.2) * 0.4;
-        mascotMesh.rotation.y += 0.012;
-        const scale = 1 + Math.sin(t * 2.5) * 0.05;
-        mascotMesh.scale.set(scale, scale, scale);
+
+        if (activeTheme3D === 'cute' && cuteGroup) {
+          cuteGroup.position.y = Math.sin(t * 2.2) * 0.12;
+          cuteGroup.rotation.y += 0.012;
+          cuteGroup.rotation.z = Math.sin(t * 1.5) * 0.08;
+          if (cuteGroup.userData.miniStarGroup) {
+            cuteGroup.userData.miniStarGroup.rotation.y -= 0.025;
+            cuteGroup.userData.miniStarGroup.rotation.x = Math.sin(t) * 0.2;
+          }
+        } else if (activeTheme3D === 'hacker' && hackerGroup) {
+          hackerGroup.userData.coreMesh.rotation.y += 0.025;
+          hackerGroup.userData.coreMesh.rotation.x += 0.018;
+          hackerGroup.userData.spikeGroup.rotation.y -= 0.015;
+          hackerGroup.userData.ring1.rotation.z += 0.035;
+          hackerGroup.userData.ring2.rotation.y -= 0.04;
+          hackerGroup.userData.pointSwarm.rotation.y += 0.01;
+
+          if (Math.random() > 0.93) {
+            hackerGroup.position.x = (Math.random() - 0.5) * 0.05;
+            hackerGroup.position.y = (Math.random() - 0.5) * 0.05;
+          } else {
+            hackerGroup.position.x = 0;
+            hackerGroup.position.y = 0;
+          }
+          const pulse = 1 + Math.sin(t * 5.0) * 0.05;
+          hackerGroup.scale.set(pulse, pulse, pulse);
+        } else if (activeTheme3D === 'obsidian' && obsidianGroup) {
+          obsidianGroup.userData.crystalMesh.rotation.y += 0.008;
+          obsidianGroup.userData.crystalMesh.rotation.x = Math.sin(t * 0.8) * 0.15;
+          obsidianGroup.userData.gyroRing1.rotation.y += 0.015;
+          obsidianGroup.userData.gyroRing2.rotation.x += 0.012;
+          obsidianGroup.userData.quantumRing.rotation.z -= 0.03;
+          obsidianGroup.position.y = Math.sin(t * 1.2) * 0.05;
+        }
+
         renderer.render(scene, camera);
       }
       animate();
 
+      // Drag / Swipe Interaction (Mouse + Touch for Android)
       let isDragging = false, prevX = 0, prevY = 0;
-      container.addEventListener('mousedown', (e) => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
-      window.addEventListener('mouseup', () => isDragging = false);
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        mascotMesh.rotation.y += (e.clientX - prevX) * 0.01;
-        mascotMesh.rotation.x += (e.clientY - prevY) * 0.01;
-        prevX = e.clientX; prevY = e.clientY;
-      });
+      const startDrag = (x, y) => { isDragging = true; prevX = x; prevY = y; };
+      const moveDrag = (x, y) => {
+        if (!isDragging || !activeModelGroup) return;
+        activeModelGroup.rotation.y += (x - prevX) * 0.01;
+        activeModelGroup.rotation.x += (y - prevY) * 0.01;
+        prevX = x; prevY = y;
+      };
+      const endDrag = () => { isDragging = false; };
+
+      container.addEventListener('mousedown', (e) => startDrag(e.clientX, e.clientY));
+      window.addEventListener('mouseup', endDrag);
+      window.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
+
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) startDrag(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', endDrag);
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
     }
 
     function updateThreeMascot(theme) {
-      if (!mascotMesh) return;
+      activeTheme3D = theme;
+      if (!scene) return;
+
+      if (activeModelGroup) scene.remove(activeModelGroup);
+
+      const titleText = document.getElementById('mascot-title-text');
+      const statusPill = document.getElementById('mascot-status-pill');
+      const captionText = document.getElementById('mascot-caption-text');
+
       if (theme === 'cute') {
-        mascotMesh.material.color.setHex(0xf43f5e);
-        mascotMesh.material.wireframe = false;
+        activeModelGroup = cuteGroup;
+        if (threePointLight) threePointLight.color.setHex(0xf43f5e);
+        if (titleText) titleText.innerText = "3D Kawaii Star Mascot";
+        if (statusPill) {
+          statusPill.innerText = "Happy Pulse";
+          statusPill.className = "pill-badge px-2 py-0.5 text-[10px] bg-rose-500/20 text-rose-600 border-rose-300";
+        }
+        if (captionText) captionText.innerText = "Putar maskot bintang lucu dengan kursor / jari Anda!";
       } else if (theme === 'hacker') {
-        mascotMesh.material.color.setHex(0x00ff41);
-        mascotMesh.material.wireframe = true;
+        activeModelGroup = hackerGroup;
+        if (threePointLight) threePointLight.color.setHex(0x00ff41);
+        if (titleText) titleText.innerText = "[ANTIGRAVITY_HACK_CORE]";
+        if (statusPill) {
+          statusPill.innerText = "Rogue Virus Active";
+          statusPill.className = "pill-badge px-2 py-0.5 text-[10px] bg-green-500/20 text-green-400 border-green-500 font-mono";
+        }
+        if (captionText) captionText.innerText = "[INTERACT]: Drag polyhedral core untuk modulasi frekuensi virus";
       } else if (theme === 'obsidian') {
-        mascotMesh.material.color.setHex(0x10b981);
-        mascotMesh.material.wireframe = false;
+        activeModelGroup = obsidianGroup;
+        if (threePointLight) threePointLight.color.setHex(0x10b981);
+        if (titleText) titleText.innerText = "Prism Gyro-Crystal";
+        if (statusPill) {
+          statusPill.innerText = "Quantum Gyro Active";
+          statusPill.className = "pill-badge px-2 py-0.5 text-[10px] bg-emerald-500/20 text-emerald-400 border-emerald-500 font-bold";
+        }
+        if (captionText) captionText.innerText = "Rotasikan prisma gyro antigravitasi untuk inspeksi kristal";
+      }
+
+      if (activeModelGroup) {
+        scene.add(activeModelGroup);
+        activeModelGroup.rotation.set(0, 0, 0);
       }
     }
 
@@ -2210,29 +2573,30 @@
       updateDrawerUnreadCount();
       recalculateEndDate();
       startTypewriterLoop();
+      updateThemeIcons(currentTheme);
     });
   </script>
 
   <!-- ANDROID PWA FLOATING THUMB NAVIGATION (RULE 8.1) -->
   <nav id="android-bottom-nav" class="fixed bottom-3 left-1/2 transform -translate-x-1/2 w-[94%] max-w-md p-2 rounded-2xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border border-current/15 shadow-2xl z-[70] flex items-center justify-around md:hidden">
     <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-rose-500" id="nav-btn-dashboard">
-      <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+      <span data-icon-key="dashboard" data-icon-class="w-5 h-5"><i data-lucide="sparkles" class="w-5 h-5"></i></span>
       <span>Dashboard</span>
     </button>
     <button onclick="switchTab('accounts')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-accounts">
-      <i data-lucide="cpu" class="w-5 h-5"></i>
+      <span data-icon-key="accounts" data-icon-class="w-5 h-5"><i data-lucide="heart-handshake" class="w-5 h-5"></i></span>
       <span>Armada</span>
     </button>
     <button onclick="switchTab('subscriptions')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-subscriptions">
-      <i data-lucide="credit-card" class="w-5 h-5"></i>
+      <span data-icon-key="subscriptions" data-icon-class="w-5 h-5"><i data-lucide="gift" class="w-5 h-5"></i></span>
       <span>Langganan</span>
     </button>
     <button onclick="switchTab('analytics')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-analytics">
-      <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+      <span data-icon-key="analytics" data-icon-class="w-5 h-5"><i data-lucide="star" class="w-5 h-5"></i></span>
       <span>UX Metrik</span>
     </button>
     <button onclick="openNotificationDrawer()" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100 relative" id="nav-btn-notifs">
-      <i data-lucide="bell" class="w-5 h-5"></i>
+      <span data-icon-key="notifs" data-icon-class="w-5 h-5"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>
       <span class="absolute top-0 right-3 w-2 h-2 rounded-full bg-rose-500"></span>
       <span>Notifikasi</span>
     </button>

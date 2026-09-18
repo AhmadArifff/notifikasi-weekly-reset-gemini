@@ -191,3 +191,33 @@ Sebelum kode dinyatakan **DONE**:
 * **Touch Target Ergonomics**:
   * Pada layar HP (<640px), seluruh tombol interaktif utama memiliki tinggi minimum 44px dan batas padding aman (*safe-area-inset-bottom*).
 
+---
+
+## 12. Standar Ikonografi Adaptif Tema & Polymorphic 3D Geometry
+
+### 🎨 12.1 Theme-Tailored Iconography Matrix (Larangan Ikon Seragam Antar Tema)
+* **DILARANG MENGGUNAKAN IKON STATIS YANG SAMA UNTUK SEMUA TEMA**: Ikon antarmuka (Lucide/SVG) tidak boleh identik saat tema berganti. Setiap tema merepresentasikan kepribadian (*design DNA*) yang berlainan secara radikal dan **WAJIB** memiliki kamus ikon tematik sendiri:
+  1. **🎀 Tema Kawaii Pastel Dream (`cute`)**:
+     * Ikon bernuansa hangat, ramah, playful, dan manis: `sparkles` (dashboard), `heart-handshake` / `bot` (armada), `gift` / `badge-percent` (langganan), `star` (analitik), `smile` / `bell-ring` (notifikasi/pengaturan), `zap` (quick action).
+  2. **💀 Tema Cyber-Virus Matrix (`hacker`)**:
+     * Ikon bernuansa terminal hacker, cyber security, raw code, dan ancaman rogue AI: `terminal` / `crosshair` (dashboard), `cpu` / `binary` (armada), `shield-alert` / `file-code` (langganan/biaya), `radio` / `scan` (telemetri), `flame` / `skull` (quick depletion), `alert-triangle` (notifikasi).
+  3. **💎 Tema Obsidian Pro High-Tech (`obsidian`)**:
+     * Ikon bernuansa presisi geometris, kristal mewah, dan visual eksekutif: `activity` / `orbit` (dashboard), `layers` / `boxes` (armada), `credit-card` / `wallet` (langganan), `bar-chart-3` / `gauge` (analitik), `gem` / `sliders-horizontal` (pengaturan), `refresh-cw` (quick trigger).
+* **Mekanisme Reaktif**: Saat `switchTheme(theme)` dieksekusi, sistem secara dinamis menukar atribut `data-lucide` pada elemen bertanda `data-icon-key` dan memanggil `lucide.createIcons()` secara mulus tanpa *layout shift*.
+
+### 🧊 12.2 Polymorphic 3D Geometry Engine (Larangan Bentuk Model 3D Donat Seragam)
+* **DILARANG MENGGUNAKAN SATU BENTUK MODEL 3D YANG HANYA BERGANTI WARNA**: Seluruh agen AI **DILARANG KERAS** hanya menggunakan bentuk donat (`TorusGeometry`) untuk semua tema. Setiap tema **WAJIB** memiliki model 3D prosedural Three.js dengan geometri, struktur mesh, material, dan kinetik pergerakan yang sepenuhnya berbeda:
+  1. **Model Kawaii (`cute`) — "Chrono-Star Mascot"**:
+     * *Geometri*: Karakter Bintang 3D / Magis bercahaya lembut dengan sepasang mata bulat mengilap (`SphereGeometry` hitam pekat dengan titik pantulan putih) dan pipi merona (*blush*).
+     * *Material*: `MeshStandardMaterial` soft pink pastel (`#ff6b8b`), roughness 0.2, metalness 0.1 dengan pencahayaan hangat.
+     * *Kinetik Animasi*: Melayang membal elastis (*bouncy sine wave floating*), berayun ceria, dan merespons interaksi drag/sentuhan layaknya boneka hidup.
+  2. **Model Cyber-Virus (`hacker`) — "Antigravity Virus Spike Core"**:
+     * *Geometri*: Inti virus poligon berduri tajam (*spiky polyhedral core* / dual intersecting octahedron) yang dikelilingi dua cincin orbital neon tipis (*dual orbital cyber rings*) yang berputar miring dan berlawanan arah dengan partikel awan digital hijau melayang (`THREE.Points`).
+     * *Material*: `MeshStandardMaterial` wireframe hijau neon fosfor (`#00ff41`), emisi cahaya tinggi, dan titik vertex menyala.
+     * *Kinetik Animasi*: Rotasi cepat, micro-glitch twitch acak (getaran sesaat), dan detak pulsasi virus rogue AI.
+  3. **Model Obsidian Pro (`obsidian`) — "Prism Chrono-Crystal Gyroscope"**:
+     * *Geometri*: Kristal polihedral facet tajam presisi (*facet octahedron/dodecahedron prism*) yang melayang di tengah dua cincin gyro gimbal antigravitasi logam gelap titanium (*dual gyroscope gimbal rings*) yang berotasi pada sumbu X dan Y secara terpisah.
+     * *Material*: `MeshPhysicalMaterial` / `MeshStandardMaterial` obsidian zamrud gelap (`#064e3b`), metalness 0.95, roughness 0.05, menghasilkan pantulan cahaya kemilau tajam berkelas enterprise.
+     * *Kinetik Animasi*: Rotasi kinetik presisi orbital, halus, mewah, dan stabil.
+
+
