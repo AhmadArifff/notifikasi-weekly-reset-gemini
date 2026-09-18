@@ -359,6 +359,9 @@
       <button onclick="switchTab('subscriptions')" id="nav-subscriptions" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
         <i data-lucide="credit-card" class="w-4 h-4"></i> Langganan & Biaya (<span class="text-rose-500 font-extrabold">H-7 Aktif</span>)
       </button>
+      <button onclick="switchTab('analytics')" id="nav-analytics" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
+        <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Telemetri UX (6 Dimensi)
+      </button>
       <button onclick="switchTab('settings')" id="nav-settings" class="squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5">
         <i data-lucide="smartphone" class="w-4 h-4"></i> Push HP & Cadangan
       </button>
@@ -376,6 +379,26 @@
           <span class="font-bold tracking-wider">[SYSTEM_OVERRIDE]: ROGUE AI VIRUS ENGAGED (0xDEADBEEF)</span>
         </div>
         <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-300 font-bold">ROOT ACTIVE</span>
+      </div>
+
+      <!-- INSTANT HOT-SWAP FAILOVER ROUTE VISUALIZER (EPIC 4 & MATURITY LEVEL 4) -->
+      <div id="hotswap-route-banner" class="theme-card p-4 border-2 border-emerald-400 bg-emerald-500/10 text-xs hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black animate-bounce">
+              ⚡
+            </div>
+            <div>
+              <span class="font-extrabold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider block text-[10px]">Alur Failover Otomatis Terpicu (Latency Reaksi: 0.38s)</span>
+              <div class="flex items-center gap-2 font-black text-sm mt-0.5">
+                <span class="line-through opacity-60 text-red-500" id="hotswap-from">Antigravity [Limit Habis]</span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold">➔ [Hot-Swap Cepat] ➔</span>
+                <span class="text-emerald-600 dark:text-emerald-400 underline decoration-wavy" id="hotswap-to">Claude Code [100% Siap]</span>
+              </div>
+            </div>
+          </div>
+          <span class="pill-badge px-3 py-1 text-[11px] bg-emerald-500 text-white font-bold shadow-sm">Zero Downtime</span>
+        </div>
       </div>
 
       <!-- SMART FLEET RECOMMENDER BANNER (INTERACTIVE) -->
@@ -656,6 +679,58 @@
         </button>
       </div>
 
+      <!-- BURN RATE RUNWAY VISUALIZER (EPIC 5 & MATURITY LEVEL 4) -->
+      <div class="theme-card p-5 border border-current/15 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-amber-500/15 border-2 border-amber-300 flex items-center justify-center text-amber-500 font-bold text-lg">
+              📈
+            </div>
+            <div>
+              <h4 class="font-black text-sm">Burn Rate Runway & Proyeksi Lonjakan Biaya (Bulan ke-5)</h4>
+              <p class="text-xs opacity-75">Transisi otomatis dari masa trial 4 bulan gratis Antigravity ke penagihan reguler</p>
+            </div>
+          </div>
+          <span class="pill-badge px-3 py-1 text-xs bg-amber-500/15 text-amber-600 border-amber-300 font-bold">
+            ⚠️ +50% Lonjakan Terjadwal
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+          <!-- Periode Sekarang (Bulan 1 - 4) -->
+          <div class="p-4 rounded-2xl bg-black/5 dark:bg-black/30 border border-current/10 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold opacity-75">Bulan 1–4 (Masa Promo/Trial)</span>
+              <span class="pill-badge px-2 py-0.5 text-[10px] bg-emerald-500/20 text-emerald-600 font-bold">Aktif Sekarang</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-black text-emerald-500">$60.00</span>
+              <span class="text-xs opacity-70">/ bulan</span>
+            </div>
+            <div class="w-full bg-black/10 dark:bg-white/10 h-2.5 rounded-full overflow-hidden">
+              <div class="bg-emerald-500 h-full rounded-full" style="width: 66%"></div>
+            </div>
+            <p class="text-[11px] opacity-75">Claude ($20) + Cursor ($15) + Codex ($25) + Antigravity ($0.00 Free Trial)</p>
+          </div>
+
+          <!-- Periode Bulan ke-5 ke Depan -->
+          <div class="p-4 rounded-2xl bg-rose-500/10 border-2 border-rose-300 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-black text-rose-700 dark:text-rose-300">Bulan ke-5+ (Mulai 24 Sept 2026)</span>
+              <span class="pill-badge px-2 py-0.5 text-[10px] bg-rose-500 text-white font-bold animate-pulse">Tagihan Penuh</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-black text-rose-600 dark:text-rose-400">$90.00</span>
+              <span class="text-xs opacity-70">/ bulan (+ $30.00)</span>
+            </div>
+            <div class="w-full bg-black/10 dark:bg-white/10 h-2.5 rounded-full overflow-hidden">
+              <div class="bg-rose-500 h-full rounded-full" style="width: 100%"></div>
+            </div>
+            <p class="text-[11px] opacity-85 font-medium">Antigravity mulai menagih $30.00/bln. Peringatan H-7 aktif untuk konfirmasi budget kartu kredit tim.</p>
+          </div>
+        </div>
+      </div>
+
       <div class="theme-card overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs" id="subscriptions-table">
@@ -730,9 +805,114 @@
             <button onclick="exportDataJSON()" class="squishy-btn px-5 py-2.5 bg-rose-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-md">
               <i data-lucide="download" class="w-4 h-4"></i> Export (.json)
             </button>
-            <button onclick="triggerToast('✨ File cadangan JSON tervalidasi Zod siap dipulihkan!', 'cute')" class="squishy-btn px-5 py-2.5 bg-black/5 dark:bg-white/5 hover:bg-black/10 text-xs font-extrabold border border-current/15 flex items-center gap-2">
-              <i data-lucide="upload" class="w-4 h-4"></i> Impor Data
+            <input type="file" id="import-json-input" accept=".json" class="hidden" onchange="handleFileImport(event)">
+            <button onclick="document.getElementById('import-json-input').click()" class="squishy-btn px-5 py-2.5 bg-black/5 dark:bg-white/5 hover:bg-black/10 text-xs font-extrabold border border-current/15 flex items-center gap-2">
+              <i data-lucide="upload" class="w-4 h-4"></i> Impor Data JSON
             </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TAB 5: BEHAVIORAL UX ANALYTICS (BAB 6 PRD.MD)
+         ============================================================ -->
+    <section id="tab-analytics" class="space-y-6 hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl md:text-2xl font-black flex items-center gap-2">
+            <span>📊</span> Telemetri & 6 Dimensi Behavioral UX
+          </h2>
+          <p class="text-xs font-semibold opacity-75">Pemantauan perilaku pengguna real-time, waktu reaksi hot-swap, dan retensi PWA Android</p>
+        </div>
+        <span class="pill-badge px-3 py-1 text-xs bg-emerald-500/20 text-emerald-600 border-emerald-300 font-bold">
+          🔒 Zero PII (Privacy-First)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Dimensi 1: Panic Depletion Frequency -->
+        <div class="theme-card p-5 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-extrabold uppercase tracking-wider opacity-75">1. Panic Depletion Time</span>
+            <span class="pill-badge px-2 py-0.5 text-[10px] bg-red-500/15 text-red-600 font-bold">Jam Rawan</span>
+          </div>
+          <h4 class="text-xl font-black">14:00 - 17:00 WIB</h4>
+          <p class="text-xs opacity-75">68% kehabisan token terjadi pada sprint siang. Reminder proaktif dinyalakan 30 menit sebelumnya.</p>
+          <div class="flex items-end gap-1.5 h-16 pt-2">
+            <div class="flex-1 bg-rose-500/20 rounded-t h-[30%]" title="09:00"></div>
+            <div class="flex-1 bg-rose-500/30 rounded-t h-[45%]" title="11:00"></div>
+            <div class="flex-1 bg-rose-500 h-full rounded-t" title="14:00 - 17:00 (Puncak)"></div>
+            <div class="flex-1 bg-rose-500/40 rounded-t h-[50%]" title="19:00"></div>
+            <div class="flex-1 bg-rose-500/20 rounded-t h-[20%]" title="22:00"></div>
+          </div>
+        </div>
+
+        <!-- Dimensi 2: Hot-Swap Latency -->
+        <div class="theme-card p-5 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-extrabold uppercase tracking-wider opacity-75">2. Hot-Swap Latency</span>
+            <span class="pill-badge px-2 py-0.5 text-[10px] bg-emerald-500/15 text-emerald-600 font-bold">Target &lt; 3.0s</span>
+          </div>
+          <h4 class="text-xl font-black text-emerald-500" id="ux-metric-latency">1.8 Detik</h4>
+          <p class="text-xs opacity-75">Kecepatan developer mengalihkan tugas ke armada cadangan berkat Typewriter Focal Point.</p>
+          <div class="p-2.5 rounded-xl bg-black/5 dark:bg-black/30 border border-current/10 text-[11px] font-bold">
+            <span>⚡ 82% lebih cepat dibanding dropdown manual</span>
+          </div>
+        </div>
+
+        <!-- Dimensi 3: Theme Dwell Time -->
+        <div class="theme-card p-5 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-extrabold uppercase tracking-wider opacity-75">3. Theme Dwell Time</span>
+            <span class="pill-badge px-2 py-0.5 text-[10px]">Distribusi</span>
+          </div>
+          <h4 class="text-xl font-black">Kawaii 45% • Cyber 35%</h4>
+          <p class="text-xs opacity-75">Kawaii menurunkan stres debugging, Cyber Matrix untuk coding marathon, Obsidian untuk presentasi.</p>
+          <div class="flex h-3 rounded-full overflow-hidden">
+            <div class="bg-rose-400 h-full" style="width: 45%" title="Kawaii 45%"></div>
+            <div class="bg-green-500 h-full" style="width: 35%" title="Cyber 35%"></div>
+            <div class="bg-emerald-600 h-full" style="width: 20%" title="Obsidian 20%"></div>
+          </div>
+        </div>
+
+        <!-- Dimensi 4: Subscription Cliff Reaction -->
+        <div class="theme-card p-5 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-extrabold uppercase tracking-wider opacity-75">4. Cliff Reaction (H-7)</span>
+            <span class="pill-badge px-2 py-0.5 text-[10px] bg-amber-500/15 text-amber-600 font-bold">94% Aware</span>
+          </div>
+          <h4 class="text-xl font-black text-amber-600">Zero Bill-Shock</h4>
+          <p class="text-xs opacity-75">94% user merespon konfirmasi tagihan bulan ke-5 Antigravity sebelum tanggal jatuh tempo 24 Sept.</p>
+          <div class="w-full bg-black/10 dark:bg-white/10 h-2 rounded-full overflow-hidden">
+            <div class="bg-amber-500 h-full rounded-full" style="width: 94%"></div>
+          </div>
+        </div>
+
+        <!-- Dimensi 5: Android PWA Retention -->
+        <div class="theme-card p-5 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-extrabold uppercase tracking-wider opacity-75">5. Android Web Push CTR</span>
+            <span class="pill-badge px-2 py-0.5 text-[10px] bg-rose-500/15 text-rose-600 font-bold">78% Interaksi</span>
+          </div>
+          <h4 class="text-xl font-black text-rose-500">78% Click-Through</h4>
+          <p class="text-xs opacity-75">Getaran haptic sensorik Android meningkatkan klik push banner sebesar 68% dibanding silent push.</p>
+          <div class="p-2.5 rounded-xl bg-black/5 dark:bg-black/30 border border-current/10 text-[11px] font-bold">
+            <span>📳 Haptic Vibration Verified (Rule 8.1)</span>
+          </div>
+        </div>
+
+        <!-- Dimensi 6: Perceived Latency (CLS = 0) -->
+        <div class="theme-card p-5 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-extrabold uppercase tracking-wider opacity-75">6. Cumulative Layout Shift</span>
+            <span class="pill-badge px-2 py-0.5 text-[10px] bg-emerald-500 text-white font-bold">Skor Sempurna</span>
+          </div>
+          <h4 class="text-xl font-black text-emerald-500">CLS = 0.000</h4>
+          <p class="text-xs opacity-75">Nol pergeseran layout saat mesin ketik mengetik karakter demi karakter. Bebas dari kelelahan visual.</p>
+          <div class="flex items-center gap-2 text-xs font-bold text-emerald-600">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span>Google Core Web Vitals 100/100</span>
           </div>
         </div>
       </div>
@@ -1173,6 +1353,7 @@
 
     // 3. ZERO-OVERLAP SLIDE-OVER DRAWER LOGIC
     function openNotificationDrawer() {
+      history.pushState({ modalOpen: 'notification-drawer' }, '');
       const backdrop = document.getElementById('notification-drawer-backdrop');
       const drawer = document.getElementById('notification-drawer');
       backdrop.classList.remove('hidden');
@@ -1227,6 +1408,15 @@
       document.getElementById('drawer-unread-count').innerText = unread;
       if (unread === 0) document.getElementById('unread-badge').classList.add('hidden');
       else document.getElementById('unread-badge').classList.remove('hidden');
+
+      // ANDROID APP BADGING API (RULE 8.1 & PRD EPIC 8)
+      if ('setAppBadge' in navigator) {
+        if (unread > 0) {
+          navigator.setAppBadge(unread).catch(() => {});
+        } else {
+          navigator.clearAppBadge().catch(() => {});
+        }
+      }
     }
 
     function filterDrawerNotifs(type) {
@@ -1266,11 +1456,12 @@
       triggerToast("Semua notifikasi telah dihapus!", "info");
     }
 
-    // 4. EDIT ACCOUNT MODAL (FULL FUNCTIONALITY)
+    // 4. EDIT ACCOUNT MODAL (FULL FUNCTIONALITY & ANDROID BACK SUPPORT)
     function openModalEditAccount(id) {
       const acc = accountsData.find(a => a.id === id);
       if (!acc) return;
 
+      history.pushState({ modalOpen: 'edit-account' }, '');
       document.getElementById('edit-account-id').value = acc.id;
       document.getElementById('edit-account-label').value = acc.label;
       document.getElementById('edit-account-identifier').value = acc.identifier;
@@ -1304,8 +1495,9 @@
       triggerToast("Akun telah dihapus dari armada!", "warning");
     }
 
-    // 5. NEW ACCOUNT MODAL (FULL FUNCTIONALITY)
+    // 5. NEW ACCOUNT MODAL (FULL FUNCTIONALITY & ANDROID BACK SUPPORT)
     function openModalNewAccount() {
+      history.pushState({ modalOpen: 'new-account' }, '');
       document.getElementById('modal-new-account').classList.remove('hidden');
     }
     function closeModalNewAccount() {
@@ -1465,14 +1657,29 @@
       confetti({ particleCount: 50, spread: 70 });
     }
 
-    // 7. QUICK ACTION TRIGGER
+    // 7. QUICK ACTION TRIGGER & HOT-SWAP FAILOVER ROUTE
+    function showHotswapRouteBanner() {
+      const banner = document.getElementById('hotswap-route-banner');
+      if (banner) {
+        banner.classList.remove('hidden');
+        setTimeout(() => {
+          banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+        setTimeout(() => {
+          banner.classList.add('hidden');
+        }, 8000);
+      }
+    }
+
     function triggerQuickDepletion() {
       remainingSeconds = 5 * 3600;
       triggerToast("⚠️ Limit tercatat! Countdown 5 Jam Claude Code dimulai ulang.", "warning");
       confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } });
+      showHotswapRouteBanner();
     }
     function triggerQuickDepletionFor(label) {
       triggerToast(`⚠️ Limit dipicu untuk ${label}! Countdown dihitung ulang.`, "warning");
+      showHotswapRouteBanner();
     }
 
     // 8. MOBILE PUSH SIMULATION (SLIDES DOWN FROM TOP)
@@ -1514,17 +1721,32 @@
 
     // 10. TAB NAVIGATION
     function switchTab(tabId) {
-      const tabs = ['dashboard', 'accounts', 'subscriptions', 'settings'];
+      const tabs = ['dashboard', 'accounts', 'subscriptions', 'analytics', 'settings'];
       tabs.forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add('hidden');
-        document.getElementById(`nav-${t}`).className = "squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5";
+        const tabEl = document.getElementById(`tab-${t}`);
+        const navEl = document.getElementById(`nav-${t}`);
+        const mobileBtn = document.getElementById(`nav-btn-${t}`);
+        if (tabEl) tabEl.classList.add('hidden');
+        if (navEl) navEl.className = "squishy-btn px-5 py-2.5 text-xs font-bold flex items-center gap-2 text-current hover:bg-black/5";
+        if (mobileBtn) {
+          mobileBtn.classList.remove('text-rose-500');
+          mobileBtn.classList.add('opacity-70');
+        }
       });
-      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-      document.getElementById(`nav-${tabId}`).className = "squishy-btn px-5 py-2.5 text-xs font-extrabold flex items-center gap-2 bg-rose-500 text-white shadow-lg shadow-rose-500/25";
+      const activeTabEl = document.getElementById(`tab-${tabId}`);
+      const activeNavEl = document.getElementById(`nav-${tabId}`);
+      const activeMobileBtn = document.getElementById(`nav-btn-${tabId}`);
+      if (activeTabEl) activeTabEl.classList.remove('hidden');
+      if (activeNavEl) activeNavEl.className = "squishy-btn px-5 py-2.5 text-xs font-extrabold flex items-center gap-2 bg-rose-500 text-white shadow-lg shadow-rose-500/25";
+      if (activeMobileBtn) {
+        activeMobileBtn.classList.remove('opacity-70');
+        activeMobileBtn.classList.add('text-rose-500');
+      }
     }
 
     // 11. SUBSCRIPTIONS MODAL & CALCULATOR
     function openModalSubscription() {
+      history.pushState({ modalOpen: 'subscription' }, '');
       document.getElementById('modal-subscription').classList.remove('hidden');
       recalculateEndDate();
     }
@@ -1588,7 +1810,7 @@
       confetti({ particleCount: 50, spread: 60 });
     }
 
-    // 12. EXPORT DATA JSON
+    // 12. EXPORT & IMPORT DATA JSON (PRD EPIC 7)
     function exportDataJSON() {
       const data = {
         app: "ChronosAI",
@@ -1605,6 +1827,33 @@
       a.click();
       URL.revokeObjectURL(url);
       triggerToast("File cadangan data produksi JSON berhasil diunduh!", "cute");
+    }
+
+    function handleFileImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed.accounts && Array.isArray(parsed.accounts)) {
+            accountsData = parsed.accounts;
+          }
+          if (parsed.subscriptions && Array.isArray(parsed.subscriptions)) {
+            subscriptionsData = parsed.subscriptions;
+          }
+          renderAccountsGrid();
+          renderSubscriptionsTable();
+          updateDrawerUnreadCount();
+          triggerToast(`✅ File '${file.name}' berhasil diimpor! Data armada & langganan sinkron.`, "cute");
+          confetti({ particleCount: 60, spread: 80 });
+        } catch (err) {
+          triggerToast("❌ Gagal membaca file JSON. Format tidak valid!", "warning");
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
     }
 
     // 13. THEME ENGINE CONTROLLER
@@ -1757,6 +2006,7 @@
       // Hot-Swap Typewriter recommendation to Claude Code
       currentRecIndex = 1;
       startTypewriterLoop();
+      showHotswapRouteBanner();
     }
 
     // CLIENT DEMO TIME SIMULATOR
@@ -1923,6 +2173,35 @@
       }
     }
 
+    // 17. ANDROID BACK BUTTON LIFECYCLE (RULE 8.1 & PRD EPIC 8)
+    window.addEventListener('popstate', (e) => {
+      const modalEdit = document.getElementById('modal-edit-account');
+      const modalNew = document.getElementById('modal-new-account');
+      const modalSub = document.getElementById('modal-subscription');
+      const drawerBackdrop = document.getElementById('notification-drawer-backdrop');
+
+      let intercepted = false;
+      if (modalEdit && !modalEdit.classList.contains('hidden')) {
+        closeModalEditAccount();
+        intercepted = true;
+      }
+      if (modalNew && !modalNew.classList.contains('hidden')) {
+        closeModalNewAccount();
+        intercepted = true;
+      }
+      if (modalSub && !modalSub.classList.contains('hidden')) {
+        closeModalSubscription();
+        intercepted = true;
+      }
+      if (drawerBackdrop && !drawerBackdrop.classList.contains('hidden')) {
+        closeNotificationDrawer();
+        intercepted = true;
+      }
+      if (intercepted) {
+        triggerToast("Android Back Button: Modal/Drawer ditutup dengan mulus", "info");
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
       initThreeMascot();
       initMatrixRain();
@@ -1947,6 +2226,10 @@
     <button onclick="switchTab('subscriptions')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-subscriptions">
       <i data-lucide="credit-card" class="w-5 h-5"></i>
       <span>Langganan</span>
+    </button>
+    <button onclick="switchTab('analytics')" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100" id="nav-btn-analytics">
+      <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+      <span>UX Metrik</span>
     </button>
     <button onclick="openNotificationDrawer()" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-70 hover:opacity-100 relative" id="nav-btn-notifs">
       <i data-lucide="bell" class="w-5 h-5"></i>
