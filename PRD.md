@@ -310,3 +310,21 @@ graph TD
 2. **Background Reconciliation**: TanStack Query secara senyap mencocokkan data lokal dengan Supabase PostgreSQL di latar belakang.
 3. **Realtime Broadcast**: Jika kuota di-reset di desktop, Service Worker di Android menerima push broadcast dan memperbarui counter tanpa perlu refresh.
 
+---
+
+## 9. Arsitektur Responsif Mobile-First (HP -> Tablet -> Desktop)
+
+### 9.1 Matriks Hirarki Perangkat & Adaptasi Tampilan
+
+| Dimensi Layar | Target Perangkat | Layout Pattern | Navigasi & Interaksi | Penanganan Form & Modal |
+| :--- | :--- | :--- | :--- | :--- |
+| **Mobile (`< 640px`)** | Smartphone Android (360x800, 412x915) | **Single-Column Vertical Flow** (Torus Mascot di atas, Dual Radar di bawah, Card bertumpuk vertikal) | **Thumb-Zone Floating Bottom Bar**, Touch targets $\ge 44\times 44\text{px}$, haptic vibration | Modal `max-h-[92vh]` dengan `overflow-y-auto`, tombol simpan sticky di bawah |
+| **Tablet (`640px - 1023px`)** | Tablet portrait & lanskap | **2-Column Adaptive Bento** (Dual Radar & Mascot bersebelahan seimbang) | Bottom Bar atau Compact Header, Touch + Mouse hybrid | Centered Dialog Modal dengan padding lebar |
+| **Desktop (`\ge 1024px`)** | Laptop & Monitor Eksternal | **3-Column Flagship Bento Grid** (Mascot 1 kolom, Dual Radar 2 kolom, tabel tabular) | **Top Header Navbar Penuh** dengan Desktop Tabs di tengah & Slide-Over Drawer di kanan | Dialog Modal luas dengan multi-column field input |
+
+### 9.2 Viewport Safety Protocol & Form Scrollability
+Untuk memastikan antarmuka tetap 100% fungsional pada tampilan Chrome 100% zoom (khususnya laptop dengan resolusi 1366x768 atau 1080p dengan Windows Display Scaling 125%/150%):
+1. **Zero Cutoff Standard**: Tidak ada tombol simpan atau tombol batal yang tertutup atau tenggelam di luar viewport browser.
+2. **Internal Scrollability**: Konten form yang panjang (seperti form langganan dengan opsi trial, durasi, dan ringkasan jadwal) ditempatkan dalam wadah dengan `overflow-y-auto pr-1.5` dan dibatasi `max-h-[92vh]`.
+3. **Sticky Action Footer**: Seluruh aksi konfirmasi ditempelkan pada posisi `sticky bottom-0 bg-card` dengan batas garis pemisah yang kontras.
+

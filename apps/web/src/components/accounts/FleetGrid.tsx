@@ -125,10 +125,10 @@ export const FleetGrid: React.FC = () => {
 
       {/* EDIT MODAL */}
       {editingAccount && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-          <div className="theme-card max-w-md w-full p-6 space-y-4">
-            <h4 className="text-lg font-black">Edit Konfigurasi Akun</h4>
-            <form onSubmit={handleSaveEdit} className="space-y-3 text-xs">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[110] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="theme-card max-w-md w-full p-5 sm:p-6 space-y-4 my-auto max-h-[92vh] flex flex-col shadow-2xl">
+            <h4 className="text-lg font-black flex-shrink-0">Edit Konfigurasi Akun</h4>
+            <form onSubmit={handleSaveEdit} className="space-y-3 text-xs overflow-y-auto pr-1 flex-1">
               <div>
                 <label className="font-bold block mb-1">Nama / Label Akun</label>
                 <input
@@ -147,7 +147,7 @@ export const FleetGrid: React.FC = () => {
                   className="w-full p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-current/20 font-bold"
                 />
               </div>
-              <div className="flex justify-end gap-2 pt-3">
+              <div className="flex justify-end gap-2 pt-3 border-t border-current/10 flex-shrink-0 sticky bottom-0 bg-[var(--bg-card)] py-2">
                 <button
                   type="button"
                   onClick={() => setEditingAccount(null)}
@@ -166,10 +166,10 @@ export const FleetGrid: React.FC = () => {
 
       {/* NEW MODAL */}
       {isNewModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-          <div className="theme-card max-w-md w-full p-6 space-y-4">
-            <h4 className="text-lg font-black">Tautkan Akun AI Baru</h4>
-            <form onSubmit={handleCreateAccount} className="space-y-3 text-xs">
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[110] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="theme-card max-w-md w-full p-5 sm:p-6 space-y-4 my-auto max-h-[92vh] flex flex-col shadow-2xl">
+            <h4 className="text-lg font-black flex-shrink-0">Tautkan Akun AI Baru</h4>
+            <form onSubmit={handleCreateAccount} className="space-y-3 text-xs overflow-y-auto pr-1 flex-1">
               <div>
                 <label className="font-bold block mb-1">Nama Provider / Akun</label>
                 <input
@@ -203,7 +203,7 @@ export const FleetGrid: React.FC = () => {
                   <option value="MONTHLY_CALENDAR">Monthly Calendar</option>
                 </select>
               </div>
-              <div className="flex justify-end gap-2 pt-3">
+              <div className="flex justify-end gap-2 pt-3 border-t border-current/10 flex-shrink-0 sticky bottom-0 bg-[var(--bg-card)] py-2">
                 <button
                   type="button"
                   onClick={() => setIsNewModalOpen(false)}

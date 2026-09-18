@@ -164,3 +164,30 @@ Sebelum kode dinyatakan **DONE**:
   3. **Langkah 3 (Menunggu Konfirmasi Resmi)**: AI **WAJIB BERHENTI** dan menanyakan persetujuan kepada pengguna.
   4. **Langkah 4 (Baru Boleh ke Monorepo)**: HANYA SETELAH pengguna memberikan konfirmasi resmi (misalnya: *"saya konfirmasi mulai project monorepo"*), agen Builder baru diizinkan mentransfer atau mengimplementasikan kode tersebut ke dalam `apps/web`.
 
+---
+
+## 11. Arsitektur Responsif Mobile-First (HP -> Tablet -> Desktop)
+
+### 📱 11.1 Prinsip Desain Mobile-First Dimulai dari Layar HP
+* **Fondasi CSS Berbasis Layar HP**: Seluruh perancangan antarmuka (baik di `design/prototype.html` maupun di `apps/web`) **WAJIB DIMULAI DARI VIEWPORT SMARTPHONE ANDROID** (lebar basis 360px - 412px):
+  * Gunakan utilitas CSS dasar tanpa prefix sebagai tata letak mobile (*default mobile style*), misalnya `grid-cols-1`, `p-3`, `w-full`.
+  * Tambahkan prefix `sm:` (min-width: 640px) untuk adaptasi layar phablet / mini-tablet.
+  * Tambahkan prefix `md:` (min-width: 768px) untuk adaptasi layar tablet lanskap.
+  * Tambahkan prefix `lg:` (min-width: 1024px) dan `xl:` (min-width: 1280px) untuk layar laptop dan desktop monitor lebar.
+* **Hirarki Adaptasi Komponen**:
+  1. **Header**: Mobile = Logo ringkas + Theme switcher + Bell notifikasi. Desktop = Tambahan tab navigasi penuh di tengah.
+  2. **Bento Grid**: Mobile = 1 kolom vertikal (Torus Mascot di atas, Dual Radar di bawah). Desktop = 3 kolom Bento (Mascot 1 kolom, Dual Radar 2 kolom).
+  3. **Navigasi Utama**: Mobile = Floating Thumb-Zone Bar di bagian bawah layar. Desktop = Top Navbar di bagian atas layar.
+  4. **Tabel Data**: Mobile = Card bersusun vertikal atau container horizontal scroll `overflow-x-auto`. Desktop = Tabel tabular lengkap.
+
+### 🛡️ 11.2 Kontrak Keamanan Viewport Form & Modal (Anti-Cutoff & Scroll Safety)
+* **DILARANG MEMBUAT MODAL TERPOTONG DI LAYAR KECIL / CHROME 100% ZOOM**:
+  * Seluruh modal dialog dan form pop-up (`#modal-edit-account`, `#modal-new-account`, `#modal-subscription`, dll.) **WAJIB** menerapkan struktur 3 lapis anti-clipping:
+    1. **Layer 1 (Overlay Wrapper)**: `fixed inset-0 bg-black/70 backdrop-blur-sm z-[70] flex items-center justify-center p-3 sm:p-4 overflow-y-auto`.
+    2. **Layer 2 (Modal Card Container)**: `theme-card max-w-lg w-full p-5 sm:p-6 my-auto max-h-[92vh] flex flex-col shadow-2xl`. Tinggi kartu tidak boleh melebihi 92% tinggi layar (*viewport height*).
+    3. **Layer 3 (Form Body & Sticky Action Footer)**:
+       - Konten isian form **WAJIB** `overflow-y-auto pr-1.5 flex-1` sehingga dapat di-scroll lancar saat form panjang.
+       - Tombol aksi (Batal, Simpan, Hapus) **WAJIB** diletakkan pada container `sticky bottom-0 flex-shrink-0 bg-[var(--bg-card)] pt-3 border-t border-current/10` agar selalu terlihat dan tidak pernah tenggelam di bawah layar.
+* **Touch Target Ergonomics**:
+  * Pada layar HP (<640px), seluruh tombol interaktif utama memiliki tinggi minimum 44px dan batas padding aman (*safe-area-inset-bottom*).
+
